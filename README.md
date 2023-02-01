@@ -42,7 +42,7 @@ Check out our user protocol [timing] for more information about the expected run
 ## 5. Instructions for use
 
 ### Prepare input files
-Please refer to the (https://doi.org/10.5281/zenodo.7588262) folder in demo datasets to generate the input files.
+Please refer to the [inputDir] folder in demo datasets (https://doi.org/10.5281/zenodo.7588262) to generate the input files.
 ### PanSyn run
 PanSyn has multiple subroutines (Microsyteny, Macrosyteny and Integrated Micro & Macro analysis). Users only need to prepare input files, simply modify the configuration file and corresponding command parameters to execute them. 
 Detailed function description and parameter settings are described in our user protocol [Procedure]. 

@@ -34,7 +34,7 @@ The time from download to installation is less than 10 minutes.
 
 
 ## 4. Demo
-We provide the simplified demo datasets and full demo datasets, respectively ( available at https://github.com/xxx  https://doi.org/10.5281/zenodo.7588262 ).
+We provide the simplified demo datasets and full demo datasets, respectively ( available at https://doi.org/10.5281/zenodo.7588262 ).
 Simplified demo datasets: including input files and main result files.
 Full demo datasets: including input files, all processed data and result files.
 Check out our user protocol [timing] for more information about the expected run time.

@@ -45,7 +45,8 @@ Please refer to the [inputDir] folder in demo datasets(https://doi.org/10.5281/z
 PanSyn has multiple subroutines (Microsyteny, Macrosyteny and Integrated Micro & Macro analysis). Users only need to prepare input files, simply modify the configuration file and corresponding command parameters to execute them. 
 Detailed function description and parameter settings are described in the protocol [Procedure]. 
 ### Quick start
+```
 perl PanSyn/Syn_scripts/*.pl -parameter
-
+```
 ## Contact
 If you have any questions, please feel free to contact: liyuli@ouc.edu.cn

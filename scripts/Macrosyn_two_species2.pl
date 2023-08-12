@@ -3,7 +3,7 @@ use Getopt::Long;
 my %opts;
 use lib;
 use SVG;
-GetOptions(\%opts,"pairs=s","m=s","n=s","o5=s","gffm=s","gffn=s","pm=s","pn=s","g=s","color=s","c=s","e=s","p=s","name1=s","name2=s","h|help");
+GetOptions(\%opts,"pansyn=s","pairs=s","m=s","n=s","o5=s","gffm=s","gffn=s","pm=s","pn=s","g=s","color=s","c=s","e=s","p=s","name1=s","name2=s","h|help");
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
 	-pairs	Full path to the [*.pairs] file 
@@ -16,6 +16,7 @@ if (defined $opts{h} or defined $opts{help}) {
 	-pn	Full path to the pep file of species B (e.g. MMus.pep)
 	-g	Full path to the genome file of species B (e.g. MMus.fa)
 	-color	Full path to the [chr_color.txt] file
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
 	-c	Specify whether to cluster the scaffolds (1 or 2, default: 2)
 		1: For species with scaffold-level assemblies
@@ -28,7 +29,7 @@ if (defined $opts{h} or defined $opts{help}) {
 		*************************************************\n";
 }
 
-if (!(defined $opts{pairs} and defined $opts{m} and defined $opts{n} and defined $opts{o5} and defined $opts{gffm} and defined $opts{gffn} and defined $opts{pm} and defined $opts{pn} and defined $opts{g} and defined $opts{color})) {
+if (!(defined $opts{pairs} and defined $opts{pansyn} and defined $opts{m} and defined $opts{n} and defined $opts{o5} and defined $opts{gffm} and defined $opts{gffn} and defined $opts{pm} and defined $opts{pn} and defined $opts{g} and defined $opts{color})) {
 		die "************************************************\n
 	-pairs	Full path to the [*.pairs] file 
 	-m	The abbreviation for the name of species A (e.g. HSap)
@@ -40,6 +41,7 @@ if (!(defined $opts{pairs} and defined $opts{m} and defined $opts{n} and defined
 	-pn	Full path to the pep file of species B (e.g. MMus.pep)
 	-g	Full path to the genome file of species B (e.g. MMus.fa)
 	-color	Full path to the [chr_color.txt] file
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
 	-c	Specify whether to cluster the scaffolds (1 or 2, default: 2)
 		1: For species with scaffold-level assemblies
@@ -60,6 +62,15 @@ if ($opts{o5} =~ /(\/)$/) {
 
     # É¾³ýÄ©Î²µÄ /
     $opts{o5} =~ s/$slash$//;
+}
+########
+####
+if ($opts{pansyn} =~ /(\/)$/) {
+    # ´æ´¢²¶»ñµÄ½á¹û
+    $slash = $1;
+
+    # É¾³ýÄ©Î²µÄ /
+    $opts{pansyn} =~ s/$slash$//;
 }
 ########
 
@@ -769,7 +780,7 @@ sub plot_dot_hd12{
 	system "rm $pathway/$nv_cg/result";
 	system "rm $pathway/$nv_cg/sum-result";
 	system "rm $pathway/$nv_cg/result-reverse";
-	system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+	system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 	open I,"<$pathway/$nv_cg/$fi";
 	open O,">$pathway/$nv_cg/first_line";
 	while ($a=<I>){
@@ -1014,7 +1025,7 @@ sub plot_dot_hd22{
 	system "rm $pathway/$nv_cg/result";
 	system "rm $pathway/$nv_cg/sum-result";
 	system "rm $pathway/$nv_cg/result-reverse";
-	system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+	system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 	open I,"<$pathway/$nv_cg/$name.scaff.match.table";
 	open O,">$pathway/$nv_cg/first_line";
 	while ($a=<I>){
@@ -2025,7 +2036,7 @@ foreach my $i (sort keys %h_numpai) {
 }
 close O;
 
-system "Chr_breakage_fusion1 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o5}/formatted_ancestor_chr_color.txt";
+system "Rscript $opts{pansyn}/Chr_breakage_fusion1.R $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o5}/formatted_ancestor_chr_color.txt";
 
 system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R";
 system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R1";

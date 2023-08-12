@@ -2,13 +2,14 @@
 #use strict;
 use Getopt::Long;
 my %opts;
-GetOptions(\%opts,"i=s","t=s","color=s","o=s","width=s","height=s","h|help");
-if (!( defined $opts{i} and defined $opts{t} and defined $opts{color} and defined $opts{o})) {
+GetOptions(\%opts,"i=s","t=s","color=s","o=s","width=s","height=s","pansyn=s","h|help");
+if (!( defined $opts{i} and defined $opts{t} and defined $opts{color} and defined $opts{o} and defined $opts{pansyn})) {
 		die "************************************************\n
 	-i	Full path to the [inputDir_S23] directory
 	-t	Full path to the [tree.tre] file
 	-color	Full path to the [*_ancestor_chr_color.txt] file
 	-o	Full path to the [outputDir_S23] directory
+	-pansyn Full path the [scripts] provided by PanSyn
 	-Optional:
 	-width	The width of the output image (default: 22)
 	-height	The height of the output image (default: 4)
@@ -21,6 +22,7 @@ if (defined $opts{h} or defined $opts{help}) {
 	-t	Full path to the [tree.tre] file
 	-color	Full path to the [*_ancestor_chr_color.txt] file
 	-o	Full path to the [outputDir_S23] directory
+	-pansyn Full path the [scripts] provided by PanSyn
 	-Optional:
 	-width	The width of the output image (default: 22)
 	-height	The height of the output image (default: 4)
@@ -46,6 +48,17 @@ if ($opts{o} =~ /(\/)$/) {
     $opts{o} =~ s/$slash$//;
 }
 ####
+
+###
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
+}
+####
+
 
 if (!(defined $opts{width})) {
 	$opts{width}=22;
@@ -80,7 +93,7 @@ while (my $c=readdir P) {
 }
 close P;
 
-system "infer_chr_fusion --tree_dir \"$opts{t}\" --work_space \"$opts{o}\" ";
+system "python $opts{pansyn}/infer_chr_fusion.py --tree_dir \"$opts{t}\" --work_space \"$opts{o}\" ";
 ##########
 open I,"< $opts{color}";
 open O,"> $opts{o}/color.txt";
@@ -129,7 +142,7 @@ while (my $c=readdir P) {
 		}
 		close I;
 		close O;
-		system "Chr_breakage_fusion2 $opts{o} $opts{o}/color.txt $opts{o}/$c-R $out_name $opts{width} $opts{height}";
+		system "Rscript $opts{pansyn}/Chr_breakage_fusion2.R $opts{o} $opts{o}/color.txt $opts{o}/$c-R $out_name $opts{width} $opts{height}";
 	}
 }
 close P;

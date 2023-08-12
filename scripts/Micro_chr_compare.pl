@@ -2,14 +2,15 @@
 use strict;
 use Getopt::Long;
 my %opts;
-GetOptions(\%opts,"i=s","t=s","e=s","o=s","color=s","r=s","w=s","sl=s","m=s","a=s","h|help");
-if (!( defined $opts{i} and defined $opts{o} and defined $opts{color} and defined $opts{r} and defined $opts{a})) {
+GetOptions(\%opts,"pansyn=s","i=s","t=s","e=s","o=s","color=s","r=s","w=s","sl=s","m=s","a=s","h|help");
+if (!( defined $opts{i} and defined $opts{o} and defined $opts{color} and defined $opts{r} and defined $opts{a} and defined $opts{pansyn})) {
 		die "************************************************\n
 	-i	Full path to the [inputDir_S8] directory
 	-r	The abbreviation of the reference species name (e.g. HSap)
 	-o	Full path to the [outputDir_S8] directory
 	-color	Full path to the [*.color] file
 	-a	Sequence alignment software (diamond or blast)
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
 	-t	Number of threads (default: 12)
 	-e	Sequence alignment E-value (default: 1e-5 for blast, 1e-3 for diamond)
@@ -26,6 +27,7 @@ if (defined $opts{h} or defined $opts{help}) {
 	-o	Full path to the [outputDir_S8] directory
 	-color	Full path to the [*.color] file
 	-a	Sequence alignment software (diamond or blast)
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
 	-t	Number of threads (default: 12)
 	-e	Sequence alignment E-value (default: 1e-5 for blast, 1e-3 for diamond)
@@ -54,6 +56,15 @@ if ($opts{o} =~ /(\/)$/) {
 
     # 删除末尾的 /
     $opts{o} =~ s/$slash$//;
+}
+####
+####
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
 }
 ####
 
@@ -236,7 +247,7 @@ if ($opts{a} eq "blast") {
 				close O;
 				system "sort -k 1,1 -k 3n,3 $opts{o}/$opts{r}_$cf_name.msynt >$opts{o}/$opts{r}_$cf_name.sorted.msynt";
 				system "sort -k 1,1 -k 3n,3 $opts{o}/$cf_name\_$opts{r}.msynt >$opts{o}/$cf_name\_$opts{r}.sorted.msynt";
-				system "drawCLGContrib2.4_2 $opts{o}/$opts{r}_$cf_name.sorted.msynt:,algcolor=$opts{o}/$opts{r}_$cf_name.sorted.msynt:type=alg,file=$opts{o}/$opts{r}_$cf_name.lab,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} $opts{o}/$cf_name\_$opts{r}.sorted.msynt:,algcolor=$opts{o}/$opts{r}_$cf_name.sorted.msynt:type=alg,file=$opts{o}/$opts{r}_$cf_name.lab,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} > $opts{o}/$opts{r}_$cf_name.svg";
+				system "perl $opts{pansyn}/drawCLGContrib2.4_2.pl $opts{o}/$opts{r}_$cf_name.sorted.msynt:,algcolor=$opts{o}/$opts{r}_$cf_name.sorted.msynt:type=alg,file=$opts{o}/$opts{r}_$cf_name.lab,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} $opts{o}/$cf_name\_$opts{r}.sorted.msynt:,algcolor=$opts{o}/$opts{r}_$cf_name.sorted.msynt:type=alg,file=$opts{o}/$opts{r}_$cf_name.lab,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} > $opts{o}/$opts{r}_$cf_name.svg";
 			}
 		}
 	}
@@ -358,7 +369,7 @@ if ($opts{a} eq "blast") {
 	system "sort -k 1,1 -k 3n,3 $opts{o}/$opts{r}_final.msynt >$opts{o}/$opts{r}_final.msynt.sorted";
 	system "sort -k 1n,1 $opts{o}/$opts{r}_final.lab >$opts{o}/$opts{r}_final.lab.sorted";
 
-	system "drawCLGContrib2.4_2 $opts{o}/$opts{r}_final.msynt.sorted:,algcolor=$opts{o}/$opts{r}_final.msynt.sorted:type=alg,file=$opts{o}/$opts{r}_final.lab.sorted,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} > $opts{o}/$opts{r}_reference.svg";
+	system "perl $opts{pansyn}/drawCLGContrib2.4_2.pl $opts{o}/$opts{r}_final.msynt.sorted:,algcolor=$opts{o}/$opts{r}_final.msynt.sorted:type=alg,file=$opts{o}/$opts{r}_final.lab.sorted,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} > $opts{o}/$opts{r}_reference.svg";
 }
 
 
@@ -515,7 +526,7 @@ if ($opts{a} eq "diamond") {
 				close O;
 				system "sort -k 1,1 -k 3n,3 $opts{o}/$opts{r}_$cf_name.msynt >$opts{o}/$opts{r}_$cf_name.sorted.msynt";
 				system "sort -k 1,1 -k 3n,3 $opts{o}/$cf_name\_$opts{r}.msynt >$opts{o}/$cf_name\_$opts{r}.sorted.msynt";
-				system "drawCLGContrib2.4_2 $opts{o}/$opts{r}_$cf_name.sorted.msynt:,algcolor=$opts{o}/$opts{r}_$cf_name.sorted.msynt:type=alg,file=$opts{o}/$opts{r}_$cf_name.lab,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} $opts{o}/$cf_name\_$opts{r}.sorted.msynt:,algcolor=$opts{o}/$opts{r}_$cf_name.sorted.msynt:type=alg,file=$opts{o}/$opts{r}_$cf_name.lab,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} > $opts{o}/$opts{r}_$cf_name.svg";
+				system "perl $opts{pansyn}/drawCLGContrib2.4_2.pl $opts{o}/$opts{r}_$cf_name.sorted.msynt:,algcolor=$opts{o}/$opts{r}_$cf_name.sorted.msynt:type=alg,file=$opts{o}/$opts{r}_$cf_name.lab,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} $opts{o}/$cf_name\_$opts{r}.sorted.msynt:,algcolor=$opts{o}/$opts{r}_$cf_name.sorted.msynt:type=alg,file=$opts{o}/$opts{r}_$cf_name.lab,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} > $opts{o}/$opts{r}_$cf_name.svg";
 			}
 		}
 	}
@@ -637,5 +648,5 @@ if ($opts{a} eq "diamond") {
 	system "sort -k 1,1 -k 3n,3 $opts{o}/$opts{r}_final.msynt >$opts{o}/$opts{r}_final.msynt.sorted";
 	system "sort -k 1n,1 $opts{o}/$opts{r}_final.lab >$opts{o}/$opts{r}_final.lab.sorted";
 
-	system "drawCLGContrib2.4_2 $opts{o}/$opts{r}_final.msynt.sorted:,algcolor=$opts{o}/$opts{r}_final.msynt.sorted:type=alg,file=$opts{o}/$opts{r}_final.lab.sorted,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} > $opts{o}/$opts{r}_reference.svg";
+	system "perl $opts{pansyn}/drawCLGContrib2.4_2.pl $opts{o}/$opts{r}_final.msynt.sorted:,algcolor=$opts{o}/$opts{r}_final.msynt.sorted:type=alg,file=$opts{o}/$opts{r}_final.lab.sorted,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} > $opts{o}/$opts{r}_reference.svg";
 }

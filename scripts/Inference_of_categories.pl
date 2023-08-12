@@ -2,13 +2,14 @@
 use strict;
 use Getopt::Long;
 my %opts;
-GetOptions(\%opts,"g1=s","g2=s","a=s","o=s","h|help");
-if (!( defined $opts{g1} and defined $opts{g2} and defined $opts{a} and defined $opts{o})) {
+GetOptions(\%opts,"g1=s","g2=s","a=s","o=s","pansyn=s","h|help");
+if (!( defined $opts{g1} and defined $opts{g2} and defined $opts{a} and defined $opts{o} and defined $opts{pansyn})) {
 		die "************************************************\n
 	-g1	Full path to the [node*-Gain.OG.genes] file
 	-g2	Full path to the [node*-Loss.OG.genes] file
 	-a	Full path to the [Gain_Loss.emapper.annotations] file
 	-o	Full path to the [outputDir_S33] directory
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
 	-h|-help	Print this help page
 		*************************************************\n";
@@ -19,6 +20,7 @@ if (defined $opts{h} or defined $opts{help}) {
 	-g2	Full path to the [node*-Loss.OG.genes] file
 	-a	Full path to the [Gain_Loss.emapper.annotations] file
 	-o	Full path to the [outputDir_S33] directory
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
 	-h|-help	Print this help page
 		*************************************************\n";
@@ -31,6 +33,15 @@ if ($opts{o} =~ /(\/)$/) {
 
     # 删除末尾的 /
     $opts{o} =~ s/$slash$//;
+}
+####
+####
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
 }
 ####
 
@@ -194,4 +205,4 @@ foreach my $i (@all) {
 	print O "$i\t$cha\n";
 }
 
-system("Categories $opts{o} $opts{o}/node_categories_variation.counts");
+system("Rscript $opts{pansyn}/Categories.r $opts{o} $opts{o}/node_categories_variation.counts");

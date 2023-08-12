@@ -4,8 +4,8 @@ use Getopt::Long;
 use Cwd 'getcwd';
 
 my %opts;
-GetOptions(\%opts,"i=s","b=s","r=s","p=s","o=s","e=s","l=s","t=s","height=s","width=s","z=s","q1=s","m1=s","s1=s","u1=s","p1=s","x1=s");
-if(!(defined $opts{i} and defined $opts{b} and defined $opts{r} and defined $opts{o} and defined $opts{p})){
+GetOptions(\%opts,"pansyn=s","i=s","b=s","r=s","p=s","o=s","e=s","l=s","t=s","height=s","width=s","z=s","q1=s","m1=s","s1=s","u1=s","p1=s","x1=s");
+if(!(defined $opts{i} and defined $opts{b} and defined $opts{r} and defined $opts{o} and defined $opts{p} and defined $opts{pansyn})){
 
 	die"**********************************************\n
 		-i	Full path to the [inputDir_S14A] directory
@@ -13,6 +13,7 @@ if(!(defined $opts{i} and defined $opts{b} and defined $opts{r} and defined $opt
 		-r	The abbreviation of the reference species name (e.g. HSap)
 		-o	Full path to the [outputDir_S14A] directory
 		-p	Full path to the [*_gene_pos.txt] file
+		-pansyn Full path the [scripts] provided by PanSyn
 		Optional:
 		-z	The direction of gene cluster mapping (1 or 2, default: 1)
 		-e	Threshold of similarity between sequences (0-1] (default: 0.95)
@@ -35,6 +36,7 @@ if (defined $opts{h} or defined $opts{help}) {
 		-r	The abbreviation of the reference species name (e.g. HSap)
 		-o	Full path to the [outputDir_S14A] directory
 		-p	Full path to the [*_gene_pos.txt] file
+		-pansyn Full path the [scripts] provided by PanSyn
 		Optional:
 		-z	The direction of gene cluster mapping (1 or 2, default: 1)
 		-e	Threshold of similarity between sequences (0-1] (default: 0.95)
@@ -72,6 +74,14 @@ if ($opts{o} =~ /(\/)$/) {
 
     # 删除末尾的 /
     $opts{o} =~ s/$slash$//;
+}
+####
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
 }
 ####
 
@@ -262,4 +272,4 @@ if ($num_spe>2) {
 	system "rm -r $opts{o}/for_common";
 }
 
-system "CNE1 $opts{o}/for_R $opts{o}/for_R/all-for-R.txt $opts{z} $chr $opts{p} $opts{height} $opts{width}";
+system "Rscript $opts{pansyn}/CNE1.R $opts{o}/for_R $opts{o}/for_R/all-for-R.txt $opts{z} $chr $opts{p} $opts{height} $opts{width}";

@@ -3,8 +3,8 @@ use Getopt::Long;
 my %opts;
 use lib;
 use SVG;
-GetOptions(\%opts,"m=s","n=s","ia=s","c=s","color=s","g=s","gff=s","a=s","pep=s","o1=s","o2=s","t=s","evalue=s","e=s","p=s","name1=s","name2=s","h|help");
-if (!(defined $opts{m} and defined $opts{n}  and defined $opts{a} and defined $opts{color} and defined $opts{ia} and defined $opts{g} and defined $opts{gff} and defined $opts{pep} and defined $opts{o1} and defined $opts{o2})) {
+GetOptions(\%opts,"pansyn=s","m=s","n=s","ia=s","c=s","color=s","g=s","gff=s","a=s","pep=s","o1=s","o2=s","t=s","evalue=s","e=s","p=s","name1=s","name2=s","h|help");
+if (!(defined $opts{m} and defined $opts{pansyn} and defined $opts{n}  and defined $opts{a} and defined $opts{color} and defined $opts{ia} and defined $opts{g} and defined $opts{gff} and defined $opts{pep} and defined $opts{o1} and defined $opts{o2})) {
 		die "************************************************\n
 	-m	The abbreviation for the name of the species that represents the ancestral genome (e.g. NVec)
 	-n	The abbreviation for the name of the interested species (e.g. HSap)
@@ -16,6 +16,7 @@ if (!(defined $opts{m} and defined $opts{n}  and defined $opts{a} and defined $o
 	-o1	Full path to the [outputDir1_S17] directory
 	-o2  Full path to the [outputDir2_S18B] directory
 	-a	Sequence alignment software (diamond or blast)
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
 	-evalue	Sequence alignment E-value (e.g. 1e-5 for blast, 1e-3 for diamond)
 	-c	Specify whether to cluster the scaffolds (1 or 2, default: 2)
@@ -42,6 +43,7 @@ Options:
 	-o1	Full path to the [outputDir1_S17] directory
 	-o2  Full path to the [outputDir2_S18B] directory
 	-a	Sequence alignment software (diamond or blast)
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
 	-evalue	Sequence alignment E-value (e.g. 1e-5 for blast, 1e-3 for diamond)
 	-c	Specify whether to cluster the scaffolds (1 or 2, default: 2)
@@ -108,6 +110,15 @@ if ($opts{o2} =~ /(\/)$/) {
 
     # 删除末尾的 /
     $opts{o2} =~ s/$slash$//;
+}
+####
+####
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
 }
 ####
 
@@ -1016,7 +1027,7 @@ if ($opts{a} eq "blast") {
 		system "rm $pathway/$nv_cg/result";
 		system "rm $pathway/$nv_cg/sum-result";
 		system "rm $pathway/$nv_cg/result-reverse";
-		system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+		system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 		open I,"<$pathway/$nv_cg/$fi";
 		open O,">$pathway/$nv_cg/first_line";
 		while ($a=<I>){
@@ -1261,7 +1272,7 @@ if ($opts{a} eq "blast") {
 		system "rm $pathway/$nv_cg/result";
 		system "rm $pathway/$nv_cg/sum-result";
 		system "rm $pathway/$nv_cg/result-reverse";
-		system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+		system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 		open I,"<$pathway/$nv_cg/$name.scaff.match.table";
 		open O,">$pathway/$nv_cg/first_line";
 		while ($a=<I>){
@@ -2257,7 +2268,7 @@ if ($opts{a} eq "blast") {
 	}
 	close O;
 
-	system "Chr_breakage_fusion1 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o2}/formatted_ancestor_chr_color.txt";
+	system "Rscript Chr_breakage_fusion1.R $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o2}/formatted_ancestor_chr_color.txt";
 	system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R";
 	system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R1";
 	system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R2";
@@ -3156,7 +3167,7 @@ if ($opts{a} eq "diamond") {
 		system "rm $pathway/$nv_cg/result";
 		system "rm $pathway/$nv_cg/sum-result";
 		system "rm $pathway/$nv_cg/result-reverse";
-		system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+		system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 		open I,"<$pathway/$nv_cg/$fi";
 		open O,">$pathway/$nv_cg/first_line";
 		while ($a=<I>){
@@ -3401,7 +3412,7 @@ if ($opts{a} eq "diamond") {
 		system "rm $pathway/$nv_cg/result";
 		system "rm $pathway/$nv_cg/sum-result";
 		system "rm $pathway/$nv_cg/result-reverse";
-		system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+		system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 		open I,"<$pathway/$nv_cg/$name.scaff.match.table";
 		open O,">$pathway/$nv_cg/first_line";
 		while ($a=<I>){
@@ -4397,7 +4408,7 @@ if ($opts{a} eq "diamond") {
 	}
 	close O;
 
-	system "Chr_breakage_fusion1 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o2}/formatted_ancestor_chr_color.txt";
+	system "Rscript $opts{pansyn}/Chr_breakage_fusion1.R $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o2}/formatted_ancestor_chr_color.txt";
 	system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R";
 	system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R1";
 	system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R2";

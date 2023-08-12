@@ -15,7 +15,7 @@ if ($ARGV[4]) { $maxsize=$ARGV[4] }
 my $cd=$ARGV[0];
 print "$cd\n\n";
 
-my $script = "findSyntBlocks_CLUS_ORTH3";
+my $script = "findSyntBlocks_CLUS_ORTH3.pl";
 
 my $c=0;
 for my $size (@s) {
@@ -36,7 +36,7 @@ for my $i (0..($#p-1)) {
  #print O "#!/bin/sh\n";
  #print O "#\$ -S /bin/bash\n";
  #print O "cd $cd\n";
- print O "$script $p1 $p2 $clusdir $size $maxsize > $cd/$p1n-$p2n.$size.blocks\n";
+ print O "perl $script $p1 $p2 $clusdir $size $maxsize > $cd/$p1n-$p2n.$size.blocks\n";
  #print O "perl /proj/Simakov/scripts/MICROSYNT/findSyntBlocks_CLUS_ORTH2.pl $p1 $p2 $clusdir $size $chromrand $maxsize $pmap > $p1-$p2.$size.randblocks\n";
  close O;
  #`chmod u+x b.$c.fa.sh`;

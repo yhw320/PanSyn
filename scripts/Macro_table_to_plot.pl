@@ -3,8 +3,8 @@ use Getopt::Long;
 my %opts;
 use lib;
 use SVG;
-GetOptions(\%opts,"i1=s","m=s","n=s","e=s","c=s","color=s","gff=s","g=s","p=s","name1=s","name2=s","pairs2=s","o4=s","h|help");
-if (defined $opts{h} or defined $opts{help}) {
+GetOptions(\%opts,"pansyn=s","i1=s","m=s","n=s","e=s","c=s","color=s","gff=s","g=s","p=s","name1=s","name2=s","pairs2=s","o4=s","h|help");
+if (defined $opts{h} or defined $opts{help} and defined $opts{pansyn}) {
 		die "************************************************\n
 	-i1	Full path to the [outputDir1_S17] directory
 	-m	The abbreviation for the name of the species representing the ancestral genome (e.g. NVec)
@@ -14,6 +14,7 @@ if (defined $opts{h} or defined $opts{help}) {
 	-g	Full path to the genome sequence file of the interested species
 	-color	Full path to the [*_ancestor_chr_color.txt] file
 	-pairs2	Full path to the [*.pairs2.score] file
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
 	-c	Specify whether to cluster the scaffolds (1 or 2, default: 2)
 		1: For species with scaffold-level assemblies
@@ -36,6 +37,7 @@ if (!(defined $opts{i1} and defined $opts{m} and defined $opts{color} and define
 	-g	Full path to the genome sequence file of the interested species
 	-color	Full path to the [*_ancestor_chr_color.txt] file
 	-pairs2	Full path to the [*.pairs2.score] file
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
 	-c	Specify whether to cluster the scaffolds (1 or 2, default: 2)
 		1: For species with scaffold-level assemblies
@@ -65,6 +67,15 @@ if ($opts{o4} =~ /(\/)$/) {
     $opts{o4} =~ s/$slash$//;
 }
 ###
+####
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
+}
+####
 
 if (!(defined $opts{e})) {
 	$opts{e}=0.5;
@@ -770,7 +781,7 @@ sub plot_dot_hd12{
 	system "rm $pathway/$nv_cg/result";
 	system "rm $pathway/$nv_cg/sum-result";
 	system "rm $pathway/$nv_cg/result-reverse";
-	system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+	system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 	open I,"<$pathway/$nv_cg/$fi";
 	open O,">$pathway/$nv_cg/first_line";
 	while ($a=<I>){
@@ -1015,7 +1026,7 @@ sub plot_dot_hd22{
 	system "rm $pathway/$nv_cg/result";
 	system "rm $pathway/$nv_cg/sum-result";
 	system "rm $pathway/$nv_cg/result-reverse";
-	system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+	system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 	open I,"<$pathway/$nv_cg/$name.scaff.match.table";
 	open O,">$pathway/$nv_cg/first_line";
 	while ($a=<I>){
@@ -2023,7 +2034,7 @@ foreach my $i (sort keys %h_numpai) {
 }
 close O;
 
-system "Chr_breakage_fusion1 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o4}/formatted_ancestor_chr_color.txt";
+system "Rscript $opts{pansyn}/Chr_breakage_fusion1.R $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o4}/formatted_ancestor_chr_color.txt";
 
 system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R";
 system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R1";

@@ -5,11 +5,12 @@ my %opts;
 use List::Util qw(max);
 use Cwd 'getcwd';
 
-GetOptions(\%opts,"i1=s","o1=s","width=s","height=s","h|help");
-if (!( defined $opts{i1} and defined $opts{o1})) {
+GetOptions(\%opts,"i1=s","pansyn=s","o1=s","width=s","height=s","h|help");
+if (!( defined $opts{i1} and defined $opts{o1} and defined $opts{pansyn})) {
 		die "************************************************\n
 	-i1	Full path to the [inputDir1_S17] directory
 	-o1	Full path to the [outputDir1_S17] directory
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
 	-width	The width of the output image (default:18)
 	-height	The height of the output image (default:9)
@@ -20,6 +21,7 @@ if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
 	-i1	Full path to the [inputDir1_S17] directory
 	-o1	Full path to the [outputDir1_S17] directory
+	-pansyn Full path the [scripts] provided by PanSyn	
 	Optional:
 	-width	The width of the output image (default:18)
 	-height	The height of the output image (default:9)
@@ -44,6 +46,15 @@ if ($opts{o1} =~ /(\/)$/) {
 
     # 删除末尾的 /
     $opts{o1} =~ s/$slash$//;
+}
+####
+####
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
 }
 ####
 
@@ -188,7 +199,7 @@ close O3;
 
 my $old_dir = getcwd();
 
-system("Gene_families $opts{o1}/ancient_gene_families.analysis/family_situation.table  $opts{o1}/inputR_barchart_data $opts{i1}/tree.nwk $opts{o1} $opts{i1}/species_classification.table $opts{width} $opts{height}");
+system("Rscript $opts{pansyn}/Gene_families.R $opts{o1}/ancient_gene_families.analysis/family_situation.table  $opts{o1}/inputR_barchart_data $opts{i1}/tree.nwk $opts{o1} $opts{i1}/species_classification.table $opts{width} $opts{height}");
 #system("rm $opts{o1}/ancient_gene_families.analysis/family_situation.table");
 system("rm $old_dir/Rplots.pdf");
 system("mv $opts{o1}/inputR_barchart_data $opts{o1}/ancient_gene_families.analysis/inputR_barchart_data");

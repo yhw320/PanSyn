@@ -1,14 +1,15 @@
 #!/usr/bin/perl
 use Getopt::Long;
 my %opts;
-GetOptions(\%opts,"i=s","o2=s","b=s","c=s","color=s","width=s","height=s","h|help");
-if(!(defined $opts{i} and defined $opts{o2} and defined $opts{b} and defined $opts{c} and defined $opts{color})){
+GetOptions(\%opts,"pansyn=s","i=s","o2=s","b=s","c=s","color=s","width=s","height=s","h|help");
+if(!(defined $opts{i} and defined $opts{pansyn} and defined $opts{o2} and defined $opts{b} and defined $opts{c} and defined $opts{color})){
 	die"**********************************************\n
 	-i	Full path to the [inputDir_S11] directory
 	-o2	Full path to the new [outputDir2_S11] directory
 	-b	Full path to the interested [*_microsyn_genes.blocks] directory
 	-c	Full path to the [A_single.cluster] file
 	-color	Full path to the [genes_color.txt] file
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
 	-width	The width of the output graph (default:8)
 	-height	The height of the output graph (default:3)
@@ -22,6 +23,7 @@ if (defined $opts{h} or defined $opts{help}) {
 	-b	Full path to the interested [*_microsyn_genes.blocks] directory
 	-c	Full path to the [A_single.cluster] file
 	-color	Full path to the [genes_color.txt] file
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
 	-width	The width of the output graph (default:8)
 	-height	The height of the output graph (default:3)
@@ -57,6 +59,15 @@ if ($opts{b} =~ /(\/)$/) {
 
     # 删除末尾的 /
     $opts{b} =~ s/$slash$//;
+}
+####
+####
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
 }
 ####
 
@@ -281,4 +292,4 @@ while ($a=<INN>){
 close O;
 close INN;
 
-system "Microsyn_visualize_cluster1 $opts{o2}/visualize_cluster $opts{o2}/visualize_cluster/final_forR_microsyn_conserved.cluster $opts{width} $opts{height}";
+system "Rscript $opts{pansyn}/Microsyn_visualize_cluster1.R $opts{o2}/visualize_cluster $opts{o2}/visualize_cluster/final_forR_microsyn_conserved.cluster $opts{width} $opts{height}";

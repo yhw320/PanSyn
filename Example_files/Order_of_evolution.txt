@@ -1,0 +1,7 @@
+EUT
+BOR
+EUA
+SIM
+CAT
+GAP
+HUC

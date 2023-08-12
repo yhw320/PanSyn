@@ -26,7 +26,7 @@ We have packaged PanSyn with all its dependencies as one Conda package and made 
 ### Three ways to install PanSyn:
 #### Install from Conda:
     (1) To add channels in conda, you can use the commands:
-	`conda config --add channels bioconda`
+	```conda config --add channels bioconda```
 	`conda config --add channels conda-forge`
 	'conda config --add channels seqera'
 	'conda config --add channels dnachun'

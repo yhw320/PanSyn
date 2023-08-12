@@ -1,4 +1,9 @@
 *.pep linguist-language=perl
+*.md linguist-language=perl
+*.gff linguist-language=perl
+*.block linguist-language=perl
+*.png linguist-language=perl
+*.txt linguist-language=perl
 *.conf linguist-language=perl
 *.ini linguist-language=perl
 *.py linguist-language=python

@@ -28,13 +28,10 @@ We have packaged PanSyn with all its dependencies as one Conda package and made 
 (1) To add channels in conda, you can use the commands:<br>
     	```
 	conda config --add channels bioconda
-	```
  	conda config --add channels conda-forge
-  	```
 	conda config --add channels seqera
- 	```
 	conda config --add channels dnachun
-	```
+ 	```
  
 (2) Verify that the channels have been added successfully.<br>
 	conda config --show channels<br>

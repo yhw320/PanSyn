@@ -50,7 +50,7 @@ conda install -c micromacro pansyn -y
 #### Install from Docker:
 (1) Pull image from Dockerhub.<br>
 ```
-docker pull micromacro/pansyn:last
+docker pull micromacro/pansyn:latest
 ```
 (2) Mount local files into docker container. Replace <local_dir_path> with your local dir path.<br>
 ```

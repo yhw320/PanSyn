@@ -29,12 +29,15 @@ We have packaged PanSyn with all its dependencies as one Conda package and made 
     	conda config --add channels bioconda<br>
 	conda config --add channels conda-forge<br>
 	conda config --add channels seqera<br>
-	conda config --add channels dnachun<br>	
+	conda config --add channels dnachun<br>
+ 
 (2) Verify that the channels have been added successfully.<br>
-	conda config --show channels<br>	
+	conda config --show channels<br>
+ 
 (3) Create an environment named pansyn and active it.<br>
 	conda create --name pansyn<br>
-	conda activate pansyn<br>	
+	conda activate pansyn<br>
+ 
 (4) Install PanSyn.<br>
 	conda install -c micromacro pansyn -y<br>
 

@@ -1,0 +1,4 @@
+*.pep8 linguist-language=perl
+*.py linguist-language=python
+*.sh linguist-language=shell
+*.r linguist-language=r

@@ -20,9 +20,9 @@ A computer cluster running Linux (e.g., CentOS, Ubuntu) with the demands for ran
 
 ### Software prerequisites：
 We have packaged PanSyn with all its dependencies as one Conda package and made a Docker image of PanSyn with all needed programs and dependencies.
-△ Three ways to install PanSyn. 
-To install PanSyn from Conda or Docker, make sure that you have preinstall conda or Docker. The installation was tested on Conda version 23.7.1 and the Docker version 1.13.1, build 7d71120/1.13.1. 
-To install PanSyn from GitHub, make sure that you have preinstall the following dependencies and add to the PATH environment variable. Refer to the list of dependencies in the protocol [Software prerequisites], that indicate which module(s) use which packages.
+Three ways to install PanSyn. 
+**To install PanSyn from Conda or Docker**, make sure that you have preinstall conda or Docker. The installation was tested on Conda version 23.7.1 and the Docker version 1.13.1, build 7d71120/1.13.1. 
+**To install PanSyn from GitHub**, make sure that you have preinstall the following dependencies and add to the PATH environment variable. Refer to the list of dependencies in the protocol [Software prerequisites], that indicate which module(s) use which packages.
 
 
 ## 3. Installation guide

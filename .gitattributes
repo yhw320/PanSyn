@@ -1,4 +1,6 @@
 *.pep linguist-language=perl
+*.conf linguist-language=perl
+*.ini linguist-language=perl
 *.py linguist-language=python
 *.sh linguist-language=shell
 *.r linguist-language=r

@@ -34,12 +34,14 @@ conda config --add channels dnachun
 ```
  
 (2) Verify that the channels have been added successfully.<br>
-	conda config --show channels<br>
- 
+```
+conda config --show channels  
+```
 (3) Create an environment named pansyn and active it.<br>
-	conda create --name pansyn<br>
-	conda activate pansyn<br>
- 
+```
+conda create --name pansyn  
+conda activate pansyn  
+```
 (4) Install PanSyn.<br>
 	conda install -c micromacro pansyn -y<br>
 

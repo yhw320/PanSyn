@@ -26,33 +26,33 @@ We have packaged PanSyn with all its dependencies as one Conda package and made 
 ### Three ways to install PanSyn:
 #### Install from Conda:
 (1) To add channels in conda, you can use the commands:<br>
-    conda config --add channels bioconda
-	conda config --add channels conda-forge
-	conda config --add channels seqera
-	conda config --add channels dnachun     
+    	conda config --add channels bioconda<br>
+	conda config --add channels conda-forge<br>
+	conda config --add channels seqera<br>
+	conda config --add channels dnachun<br>   
 (2) Verify that the channels have been added successfully.<br>
-	conda config --show channels
+	conda config --show channels<br>
 (3) Create an environment named pansyn and active it.<br>
-	conda create --name pansyn
-	conda activate pansyn
+	conda create --name pansyn<br>
+	conda activate pansyn<br>
 (4) Install PanSyn.<br>
-	conda install -c micromacro pansyn -y
+	conda install -c micromacro pansyn -y<br>
 
 #### Install from Docker:
 (1) Pull image from Dockerhub.<br>
-docker pull micromacro/pansyn:last
+docker pull micromacro/pansyn:last<br>
 (2) Mount local files into docker container. Replace <local_dir_path> with your local dir path.<br>
-docker run -it -v <local_dir_path>:/root/workspace/ micromacro/pansyn:last /bin/bash
+docker run -it -v <local_dir_path>:/root/workspace/ micromacro/pansyn:last /bin/bash<br>
 (3) Activate the environment and script.<br>
-source activate Pansyn
-source /opt/conda/envs/Pansyn/cns_solve_1.3/cns_solve_env.sh
+source activate Pansyn<br>
+source /opt/conda/envs/Pansyn/cns_solve_1.3/cns_solve_env.sh<br>
 
 #### Install from GitHub:
 (1) Download and unpack https://github.com/yhw320/PanSyn/archive/refs/heads/main.zip. Or using the following command.<br>
-git clone https://github.com/yhw320/PanSyn/archive/refs/heads/main.zip
+git clone https://github.com/yhw320/PanSyn/archive/refs/heads/main.zip<br>
 (2) PanSyn software package includes scripts located in the directory "scripts" that users can run directly without compilation.<br>
-cd scripts
-perl *.pl
+cd scripts<br>
+perl *.pl<br>
        
 ### Timing: 
 Installing PanSyn via Conda or Docker can be completed within approximately 30 minutes, but it may take longer depending your internet speed.

@@ -26,37 +26,33 @@ We have packaged PanSyn with all its dependencies as one Conda package and made 
 ### Three ways to install PanSyn:
 #### Install from Conda:
 (1) To add channels in conda, you can use the commands:
-conda config --add channels bioconda
-conda config --add channels conda-forge
-conda config --add channels seqera
-conda config --add channels dnachun     
+	conda config --add channels bioconda
+	conda config --add channels conda-forge
+	conda config --add channels seqera
+	conda config --add channels dnachun     
 (2) Verify that the channels have been added successfully.
-conda config --show channels
-(3 )Create an environment named pansyn and active it.
-	conda create --name pansyn'
-	'conda activate pansyn'
-       
-    (4) Install PanSyn
-	'conda install -c micromacro pansyn -y'
+	conda config --show channels
+(3) Create an environment named pansyn and active it.
+	conda create --name pansyn
+	conda activate pansyn
+(4) Install PanSyn
+	conda install -c micromacro pansyn -y
 
 #### Install from Docker:
-    (1) Pull image from Dockerhub.
-	'docker pull micromacro/pansyn:last'
-
-    (2) Mount local files into docker container. Replace <local_dir_path> with your local dir path.
-	'docker run -it -v <local_dir_path>:/root/workspace/ micromacro/pansyn:last /bin/bash'
-
-    (3) Activate the environment and script.
-	'source activate Pansyn'
-      	'source /opt/conda/envs/Pansyn/cns_solve_1.3/cns_solve_env.sh'
+(1) Pull image from Dockerhub.
+docker pull micromacro/pansyn:last
+(2) Mount local files into docker container. Replace <local_dir_path> with your local dir path.
+docker run -it -v <local_dir_path>:/root/workspace/ micromacro/pansyn:last /bin/bash
+(3) Activate the environment and script.
+source activate Pansyn
+source /opt/conda/envs/Pansyn/cns_solve_1.3/cns_solve_env.sh
 
 #### Install from GitHub:
-    (1) Download and unpack https://github.com/yhw320/PanSyn/archive/refs/heads/main.zip. Or using the following command.
-	'git clone https://github.com/yhw320/PanSyn/archive/refs/heads/main.zip'
-
-    (2) PanSyn software package includes scripts located in the directory "scripts" that users can run directly without compilation.
-	'cd scripts'
-	'perl *.pl'
+(1) Download and unpack https://github.com/yhw320/PanSyn/archive/refs/heads/main.zip. Or using the following command.
+git clone https://github.com/yhw320/PanSyn/archive/refs/heads/main.zip
+(2) PanSyn software package includes scripts located in the directory "scripts" that users can run directly without compilation.
+cd scripts
+perl *.pl
        
 ### Timing: 
 Installing PanSyn via Conda or Docker can be completed within approximately 30 minutes, but it may take longer depending your internet speed.

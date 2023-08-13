@@ -64,7 +64,7 @@ source /opt/conda/envs/Pansyn/cns_solve_1.3/cns_solve_env.sh
 #### Install from GitHub:
 (1) Download and unpack https://github.com/yhw320/PanSyn/archive/refs/heads/main.zip. Or using the following command.<br>
 ```
-git clone https://github.com/yhw320/PanSyn/archive/refs/heads/main.zip  
+git clone https://github.com/yhw320/PanSyn.git  
 ```
 (2) PanSyn software package includes scripts located in the directory "scripts" that users can run directly without compilation.<br>
 ```

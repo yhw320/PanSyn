@@ -68,7 +68,7 @@ git clone https://github.com/yhw320/PanSyn.git
 ```
 (2) PanSyn software package includes scripts located in the directory "scripts" that users can run directly without compilation.<br>
 ```
-cd scripts  
+cd PanSyn/scripts  
 perl *.pl
 ```
 ### Timing: 

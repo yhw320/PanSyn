@@ -16,7 +16,7 @@ Based on the published algorithms or tools developed by our and other groups, we
 
 ## 2. System requirements
 ### Hardware：
-A computer cluster running Linux (e.g., CentOS, Ubuntu) with the demands for random-access memory (RAM) and free disk space heavily depend on the number of species for analysis. We conducted the demo data (containing about 20 species) under 32 GB of RAM and ~100 GB of free disk space. Internet connection is required for downloading and installing PanSyn from Conda or Docker
+A computer cluster running Linux (e.g., CentOS, Ubuntu) with the demands for random-access memory (RAM) and free disk space depend on the number of species for analysis. The demo data (containing about 20 species) were successfully run under 32 GB of RAM and ~100 GB of free disk space. Internet connection is required for downloading and installing PanSyn from Conda or Docker.
 
 ### Software prerequisites：
 We have packaged PanSyn with all its dependencies as one Conda package and made a Docker image of PanSyn with all needed programs and dependencies.<br>Three ways to install PanSyn.<br>**To install PanSyn from Conda or Docker**, make sure that you have preinstall conda or Docker. The installation was tested on Conda version 23.7.1 and the Docker version 1.13.1, build 7d71120/1.13.1.<br>**To install PanSyn from GitHub**, make sure that you have preinstall the following dependencies and add to the PATH environment variable. Refer to the list of dependencies in the protocol [Software prerequisites], that indicate which module(s) use which packages.

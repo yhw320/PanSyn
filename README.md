@@ -75,9 +75,7 @@ perl *.pl
 Installing PanSyn via Conda or Docker can be completed within approximately 30 minutes, but it may take longer depending your internet speed.
 
 ## 4. Demo datasets
-We provide the simplified demo datasets and full demo datasets in the website (https://doi.org/10.5281/zenodo.7588262), respectively.
-Simplified demo datasets: including input files and main result files.
-Full demo datasets: including input files, all processed data and result files.
+We provide the full demo datasets in the website (https://doi.org/10.5281/zenodo.7588262), which includes input files, all processed data and result files.
 
 Check out our user protocol [timing] for more information about the expected run time.
 

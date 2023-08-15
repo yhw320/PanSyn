@@ -50,3 +50,21 @@ perl PanSyn/Syn_scripts/*.pl -parameter
 ```
 ## Contact
 If you have any questions, please feel free to contact: liyuli@ouc.edu.cn
+
+## Citation
+The algorithms used in this package came primarily out of research in Wangshi's Lab in Fang Zongxi Centre, MOE Key Laboratory of Marine Genetics and Breeding, College of Marine Life Sciences, Ocean University of China. If you use Pansyn in your research we would appreciate a citation to the appropriate paper(s):
+```
+@article{H. Yu,
+  title={},
+  author={},
+  journal={},
+  volume={},
+  number={},
+  pages={},
+  year={},
+  publisher={}
+}
+```
+
+## License
+This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License](https://creativecommons.org/licenses/by-nc/4.0/).

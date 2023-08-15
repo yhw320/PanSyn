@@ -9,7 +9,7 @@
 #PBS -S /bin/bash
 
 # Change to the working directory
-cd /path/to/work_directory
+cd /your_path/work_directory
 
 # Execute the command
 <command_or_script>

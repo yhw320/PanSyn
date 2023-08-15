@@ -87,5 +87,7 @@ Please refer to the [inputDir] folder in demo datasets(https://doi.org/10.5281/z
 PanSyn has multiple subroutines (Microsyteny, Macrosyteny and Integrated Micro & Macro synteny analysis). Users only need to prepare input files and corresponding command parameters to execute them. 
 Detailed function description and parameter settings are described in the protocol [Procedure]. 
 
+Note: The PanSyn pipeline can work on both a stand-alone server and a cluster. We have provided instructions and scripts for running PanSyn in a cluster environment (e.g., with PBS or SLURM job schedulers; see https://github.com/yhw320/PanSyn/tree/main/SchedulerScripts).
+
 ### Contact
 If you have any questions, please feel free to contact: liyuli@ouc.edu.cn or hongweiyu@stu.ouc.edu.cn

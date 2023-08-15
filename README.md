@@ -90,11 +90,11 @@ Detailed function description and parameter settings are described in the protoc
 ### Contact
 If you have any questions, please feel free to contact: liyuli@ouc.edu.cn or hongweiyu@stu.ouc.edu.cn
 
-## Citation
+## 6. Citation
 The algorithms used in this package came primarily out of research in Wangshi's Lab in Fang Zongxi Centre, MOE Key Laboratory of Marine Genetics and Breeding, College of Marine Life Sciences, Ocean University of China. If you use Pansyn in your research we would appreciate a citation to our paper(s):
 ```
 
 ```
 
-## License
+## 7. License
 This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License](https://creativecommons.org/licenses/by-nc/4.0/).

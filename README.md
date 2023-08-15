@@ -52,9 +52,9 @@ conda install -c micromacro pansyn -y
 ```
 docker pull micromacro/pansyn:latest
 ```
-(2) Mount local files into docker container. Replace <local_dir_path> with your local dir path.<br>
+(2) Mount local files into docker container.<br>
 ```
-docker run -it -v <local_dir_path>:/root/workspace/ micromacro/pansyn:latest /bin/bash
+docker run -it -v <your_host_path>:<your_container_path> micromacro/pansyn:latest /bin/bash
 ```
 (3) Activate the environment and script.<br>
 ```

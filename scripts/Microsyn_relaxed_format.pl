@@ -5,17 +5,19 @@ my %opts;
 GetOptions(\%opts,"p=s","g=s","o=s","h|help");
 if (!( defined $opts{p} and defined $opts{g} and defined $opts{o})) {
 		die "************************************************\n
-	-p	Full path to the [gffs] directory containing [*_simplified.gff] files
-	-g	Full path to the [peps] directory containing [*.pep] files
-	-o	Full path to the [outputDir] directory containing output files
+	-p	Full path to the [peps_S4] or  [peps_S30] directory
+	-g	Full path to the [gffs_S4] or [gffs_S30] directory
+	-o	Full path to the [outputDir_S4] or [outputDir_S30] directory
+	Optional:
 	-h|-help Print this help page
 		*************************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
-	-p	Full path to the [gffs] directory containing [*_simplified.gff] files
-	-g	Full path to the [peps] directory containing [*.pep] files
-	-o	Full path to the [outputDir] directory containing output files
+	-p	Full path to the [peps_S4] or  [peps_S30] directory
+	-g	Full path to the [gffs_S4] or [gffs_S30] directory
+	-o	Full path to the [outputDir_S4] or [outputDir_S30] directory
+	Optional:
 	-h|-help Print this help page
 		*************************************************\n";
 }

@@ -5,23 +5,25 @@ my %opts;
 GetOptions(\%opts,"i1=s","m=s","n=s","gff=s","o4=s","pairs2=s","h|help");
 if (!(defined $opts{i1} and defined $opts{m} and defined $opts{n} and defined $opts{gff} and defined $opts{pairs2} and defined $opts{o4})) {
 		die "************************************************\n
-	-i1	The parameter refers to the same parameter [-i1] used in the previously executed command [Macrosyn1]
-	-m	Enter the abbreviation for the name of the species representing the ancestral genome (example: NVec)
-	-n	Enter the abbreviation for the name of the interested species (example: HSap)
-	-gff	Full path to the simplified GFF file of the interested species (example: HSap_simplified.gff)
-	-o4	Full path to the new [outputDir4] directory containing output files
-	-pairs2	Full path to the [*.pairs2.score] file 
+	-i1	Full path to the [inputDir1_S17] directory
+	-m	The abbreviation for the name of the species that represents the ancestral genome (e.g. NVec)
+	-n	The abbreviation for the name of the interested species (e.g. HSap)
+	-gff	Full path to the gene coordinates file of the interested species (e.g. HSap_simplified.gff)
+	-o4	Full path to the new [outputDir4_S19] directory
+	-pairs2	Full path to the [*.pairs2.score] file
+	Optional:
 	-h|-help Print this help page
 		*************************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
-	-i1	The parameter refers to the same parameter [-i1] used in the previously executed command [Macrosyn1]
-	-m	Enter the abbreviation for the name of the species representing the ancestral genome (example: NVec)
-	-n	Enter the abbreviation for the name of the interested species (example: HSap)
-	-gff	Full path to the simplified GFF file of the interested species (example: HSap_simplified.gff)
-	-o4	Full path to the new [outputDir4] directory containing output files
-	-pairs2	Full path to the [*.pairs2.score] file 
+	-i1	Full path to the [inputDir1_S17] directory
+	-m	The abbreviation for the name of the species that represents the ancestral genome (e.g. NVec)
+	-n	The abbreviation for the name of the interested species (e.g. HSap)
+	-gff	Full path to the gene coordinates file of the interested species (e.g. HSap_simplified.gff)
+	-o4	Full path to the new [outputDir4_S19] directory
+	-pairs2	Full path to the [*.pairs2.score] file
+	Optional:
 	-h|-help Print this help page
 		*************************************************\n";
 }

@@ -3,57 +3,67 @@ use Getopt::Long;
 my %opts;
 use lib;
 use SVG;
-GetOptions(\%opts,"m=s","n=s","ia=s","c=s","color=s","g=s","gff=s","a=s","pep=s","o1=s","o2=s","t=s","evalue=s","e=s","p=s","name1=s","name2=s","h|help");
-if (!(defined $opts{m} and defined $opts{n}  and defined $opts{a} and defined $opts{color} and defined $opts{ia} and defined $opts{g} and defined $opts{gff} and defined $opts{pep} and defined $opts{o1} and defined $opts{o2})) {
+GetOptions(\%opts,"pansyn=s","m=s","n=s","ia=s","c=s","color=s","g=s","gff=s","a=s","pep=s","o1=s","o2=s","t=s","evalue=s","e=s","p=s","name1=s","name2=s","h|help");
+if (!(defined $opts{m} and defined $opts{pansyn} and defined $opts{n}  and defined $opts{a} and defined $opts{color} and defined $opts{ia} and defined $opts{g} and defined $opts{gff} and defined $opts{pep} and defined $opts{o1} and defined $opts{o2})) {
 		die "************************************************\n
-	-m	Enter the abbreviation for the name of the species representing the ancestral genome (example: NVec)
-	-n	Enter the abbreviation for the name of the interested species (example: HSap)
+	-m	The abbreviation for the name of the species that represents the ancestral genome (e.g. NVec)
+	-n	The abbreviation for the name of the interested species (e.g. HSap)
 	-ia	Full path to the [Ancestor_database] directory
-	-g	Full path to the genome file of the interested species (example: HSap.fa)
-	-gff	Full path to the simplified GFF file of interested species (example: HSap_simplified.gff)
-	-pep	Full path to the protein file of the interested species (example: HSap.pep)
-	-color	Full path to the Ancestor'chr color file
-	-o1	The parameter refers to the same parameter [-o1] used in the previously executed command [Macrosyn1]
-	-o2  Full path to the new [outputDir2] directory containing output results
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
-	-evalue	Protein alignment evalue (example:1e-5)
+	-g	Full path to the genome file of the interested species (e.g. HSap.fa)
+	-gff	Full path to the gene coordinates file of the interested species (e.g. HSap_simplified.gff)
+	-pep	Full path to the protein sequence file of the interested species (e.g. HSap.pep)
+	-color	Full path to the [*_ancestor_chr_color.txt] file
+	-o1	Full path to the [outputDir1_S17] directory
+	-o2  Full path to the [outputDir2_S18B] directory
+	-a	Sequence alignment software (diamond or blast)
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
-	-c	Specify whether to cluster the scaffolds (It can be set to 1 or 2)
-		1: For species without chromosome-level assemblies
+	-evalue	Sequence alignment E-value (e.g. 1e-5 for blast, 1e-3 for diamond)
+	-c	Specify whether to cluster the scaffolds (1 or 2, default: 2)
+		1: For species with scaffold-level assemblies
 		2: For species with chromosome-level assemblies
-	-t	Protein alignment threads (default:12)
-	-e	Value indicating the tree-cutting threshold of 0.2-0.5 (default:0.5)
-	-p	Pvalue for significance test (default: 0.05)
-	-name1	Ancestor 'name shown on the resulting graph (default:same as -m)
-	-name2	Interested species'name shown on the resulting graph (default: same as -n)
+	-t	Number of threads (default: 12) 
+	-e	The value indicating the tree-cutting threshold of 0.2-0.5 (default: 0.5)
+	-p	P-Value (default: 0.05)
+	-name1	Ancestor 'name shown on the graph (default:same as -m)
+	-name2	Interested species'name shown on the graph (default: same as -n)
 	-h|-help Print this help page
 		*************************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
 Options:
-	-m	Enter the abbreviation for the name of the species representing the ancestral genome (example: NVec)
-	-n	Enter the abbreviation for the name of the interested species (example: HSap)
+	-m	The abbreviation for the name of the species that represents the ancestral genome (e.g. NVec)
+	-n	The abbreviation for the name of the interested species (e.g. HSap)
 	-ia	Full path to the [Ancestor_database] directory
-	-g	Full path to the genome file of the interested species (example: HSap.fa)
-	-gff	Full path to the simplified GFF file of interested species (example: HSap_simplified.gff)
-	-pep	Full path to the protein file of the interested species (example: HSap.pep)
-	-color	Full path to the Ancestor'chr color file
-	-o1	The parameter refers to the same parameter [-o1] used in the previously executed command [Macrosyn1]
-	-o2  Full path to the new [outputDir2] directory containing output results
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
-	-evalue	Protein alignment evalue (example:1e-5)
+	-g	Full path to the genome file of the interested species (e.g. HSap.fa)
+	-gff	Full path to the gene coordinates file of the interested species (e.g. HSap_simplified.gff)
+	-pep	Full path to the protein sequence file of the interested species (e.g. HSap.pep)
+	-color	Full path to the [*_ancestor_chr_color.txt] file
+	-o1	Full path to the [outputDir1_S17] directory
+	-o2  Full path to the [outputDir2_S18B] directory
+	-a	Sequence alignment software (diamond or blast)
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
-	-c	Specify whether to cluster the scaffolds (It can be set to 1 or 2)
-		1: For species without chromosome-level assemblies
+	-evalue	Sequence alignment E-value (e.g. 1e-5 for blast, 1e-3 for diamond)
+	-c	Specify whether to cluster the scaffolds (1 or 2, default: 2)
+		1: For species with scaffold-level assemblies
 		2: For species with chromosome-level assemblies
-	-t	Protein alignment threads (default:12)
-	-e	Value indicating the tree-cutting threshold of 0.2-0.5 (default:0.5)
-	-p	Pvalue for significance test (default: 0.05)
-	-name1	Ancestor 'name shown on the resulting graph (default:same as -m)
-	-name2	Interested species'name shown on the resulting graph (default: same as -n)
+	-t	Number of threads (default: 12) 
+	-e	The value indicating the tree-cutting threshold of 0.2-0.5 (default: 0.5)
+	-p	P-Value (default: 0.05)
+	-name1	Ancestor 'name shown on the graph (default:same as -m)
+	-name2	Interested species'name shown on the graph (default: same as -n)
 	-h|-help Print this help page
 		*************************************************\n";
+}
+if (!(defined $opts{e})) {
+	if ($opts{a} eq "blast") {
+		$opts{evalue}=1e-5;
+	}
+	if ($opts{a} eq "diamond") {
+		$opts{evalue}=0.001;
+	}
 }
 if (!(defined $opts{t})) {
 	$opts{t}=12;
@@ -102,6 +112,15 @@ if ($opts{o2} =~ /(\/)$/) {
     $opts{o2} =~ s/$slash$//;
 }
 ####
+####
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
+}
+####
 
 
 my $cluster_pathway="cluster";
@@ -138,8 +157,8 @@ if ($opts{a} eq "blast") {
 	#system "diamond blastp --query $opts{pep} --db $opts{o1}/add_species/$opts{m}/all.peps.database --outfmt 6 --out $opts{o2}/$opts{m}\_$opts{n}/$opts{n}_all.blast --evalue $opts{evalue} --threads $opts{t}";
 	#system "diamond blastp --query $opts{o1}/add_species/$opts{m}/all.peps --db $opts{pep}.database --outfmt 6 --out $opts{o2}/$opts{m}\_$opts{n}/all_$opts{n}.blast  --evalue $opts{evalue} --threads $opts{t}";
 
-	system "blastp -query $opts{pep} -db $opts{o1}/add_species/$opts{m}/all.peps -outfmt 6 -out $opts{o2}/$opts{m}\_$opts{n}/$opts{n}_all.blast -evalue $opts{e} -num_threads $opts{t}";
-	system "blastp -query $opts{o1}/add_species/$opts{m}/all.peps -db $opts{pep} -outfmt 6 -out $opts{o2}/$opts{m}\_$opts{n}/all_$opts{n}.blast -evalue $opts{e} -num_threads $opts{t}";
+	system "blastp -query $opts{pep} -db $opts{o1}/add_species/$opts{m}/all.peps -outfmt 6 -out $opts{o2}/$opts{m}\_$opts{n}/$opts{n}_all.blast -evalue $opts{evalue} -num_threads $opts{t}";
+	system "blastp -query $opts{o1}/add_species/$opts{m}/all.peps -db $opts{pep} -outfmt 6 -out $opts{o2}/$opts{m}\_$opts{n}/all_$opts{n}.blast -evalue $opts{evalue} -num_threads $opts{t}";
 
 
 	$opts{p}=sprintf("%.3f",$opts{p});
@@ -1008,7 +1027,7 @@ if ($opts{a} eq "blast") {
 		system "rm $pathway/$nv_cg/result";
 		system "rm $pathway/$nv_cg/sum-result";
 		system "rm $pathway/$nv_cg/result-reverse";
-		system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+		system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 		open I,"<$pathway/$nv_cg/$fi";
 		open O,">$pathway/$nv_cg/first_line";
 		while ($a=<I>){
@@ -1253,7 +1272,7 @@ if ($opts{a} eq "blast") {
 		system "rm $pathway/$nv_cg/result";
 		system "rm $pathway/$nv_cg/sum-result";
 		system "rm $pathway/$nv_cg/result-reverse";
-		system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+		system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 		open I,"<$pathway/$nv_cg/$name.scaff.match.table";
 		open O,">$pathway/$nv_cg/first_line";
 		while ($a=<I>){
@@ -2249,7 +2268,7 @@ if ($opts{a} eq "blast") {
 	}
 	close O;
 
-	system "Chr_breakage_fusion1 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o2}/formatted_ancestor_chr_color.txt";
+	system "Rscript Chr_breakage_fusion1.R $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o2}/formatted_ancestor_chr_color.txt";
 	system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R";
 	system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R1";
 	system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R2";
@@ -3148,7 +3167,7 @@ if ($opts{a} eq "diamond") {
 		system "rm $pathway/$nv_cg/result";
 		system "rm $pathway/$nv_cg/sum-result";
 		system "rm $pathway/$nv_cg/result-reverse";
-		system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+		system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 		open I,"<$pathway/$nv_cg/$fi";
 		open O,">$pathway/$nv_cg/first_line";
 		while ($a=<I>){
@@ -3393,7 +3412,7 @@ if ($opts{a} eq "diamond") {
 		system "rm $pathway/$nv_cg/result";
 		system "rm $pathway/$nv_cg/sum-result";
 		system "rm $pathway/$nv_cg/result-reverse";
-		system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+		system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 		open I,"<$pathway/$nv_cg/$name.scaff.match.table";
 		open O,">$pathway/$nv_cg/first_line";
 		while ($a=<I>){
@@ -4389,7 +4408,7 @@ if ($opts{a} eq "diamond") {
 	}
 	close O;
 
-	system "Chr_breakage_fusion1 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o2}/formatted_ancestor_chr_color.txt";
+	system "Rscript $opts{pansyn}/Chr_breakage_fusion1.R $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o2}/formatted_ancestor_chr_color.txt";
 	system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R";
 	system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R1";
 	system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R2";

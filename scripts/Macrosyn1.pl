@@ -1,28 +1,27 @@
-#!/usr/bin/perl -w
-use strict;
+#!/usr/bin/perl
 use Getopt::Long;
 my %opts;
 use List::Util qw(max);
 GetOptions(\%opts,"i1=s","t=s","a=s","e=s","o1=s","h|help");
 if (!( defined $opts{i1} and defined $opts{o1} and defined $opts{a})) {
 		die "************************************************\n
-	-i1	Full path to the [inputDir1] directory containing input files
-	-o1	Full path to the [outputDir1] directory containing output files
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
+	-i1	Full path to the [inputDir1_S17] directory
+	-o1	Full path to the [outputDir1_S17] directory
+	-a	Sequence alignment software (diamond or blast)
 	optional:
-	-e	Protein alignment Evalue (default:0.001/1e-5)
-	-t	Protein alignment threads (default:12)
+	-e	Sequence alignment E-value (default: 1e-3 for diamond, 1e-5 for blast)
+	-t	Number of threads (default: 12)
 	-h|-help Print this help page
 		*************************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
-	-i1	Full path to the [inputDir1] directory containing input files
-	-o1	Full path to the [outputDir1] directory containing output files
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
+	-i1	Full path to the [inputDir1_S17] directory
+	-o1	Full path to the [outputDir1_S17] directory
+	-a	Sequence alignment software (diamond or blast)
 	optional:
-	-e	Protein alignment Evalue (default:0.001/1e-5)
-	-t	Protein alignment threads (default:12)
+	-e	Sequence alignment E-value (default: 1e-3 for diamond, 1e-5 for blast)
+	-t	Number of threads (default: 12)
 	-h|-help Print this help page
 		*************************************************\n";
 }

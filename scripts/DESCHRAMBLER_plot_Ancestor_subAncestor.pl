@@ -1,16 +1,18 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl 
 #use strict;
 use Getopt::Long;
 my %opts;
-GetOptions(\%opts,"ic=s","im=s","c=s","o8=s","h|help");
-if(!(defined $opts{ic} and defined $opts{im} and defined $opts{c} and defined $opts{o8})){
+GetOptions(\%opts,"ic=s","im=s","c=s","o=s","h|help");
+if(!(defined $opts{ic} and defined $opts{im} and defined $opts{c} and defined $opts{o})){
 
 	die"**********************************************\n
 	options:
 		-ic	Full path to the [chrom_sizes] directory
 		-im Full path to the [maps] directory
 		-c	Full path to the [Order_of_evolution.txt] file
-		-o8	Full path to the new directory containing output files
+		-o	Full path to the [outputDir_S24B] directory
+		-Optional:
+		-h|-help Print this help page
 		*********************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
@@ -18,7 +20,9 @@ if (defined $opts{h} or defined $opts{help}) {
 		-ic	Full path to the [chrom_sizes] directory
 		-im Full path to the [maps] directory
 		-c	Full path to the [Order_of_evolution.txt] file
-		-o8	Full path to the new directory containing output files
+		-o	Full path to the [outputDir_S24B] directory
+		-Optional:
+		-h|-help Print this help page
 		*************************************************\n";
 }
 
@@ -44,12 +48,12 @@ if ($opts{im} =~ /(\/)$/) {
 ####
 my $slash;
 ###
-if ($opts{o8} =~ /(\/)$/) {
+if ($opts{o} =~ /(\/)$/) {
     # 存储捕获的结果
     $slash = $1;
 
     # 删除末尾的 /
-    $opts{o8} =~ s/$slash$//;
+    $opts{o} =~ s/$slash$//;
 }
 ####
 
@@ -59,13 +63,13 @@ while ($aa=readdir I) {
 	if ( $aa=~/^(\S+)-APCF_size.txt$/ ) {
 		$file=$dir1."/$aa";
 
-		if (-d "$opts{o8}/$1") {
-			print "The $opts{o8}/$1 directory already exists!\nThe old directory has been deleted.\n";
-			system "rm -r $opts{o8}/$1";
+		if (-d "$opts{o}/$1") {
+			print "The $opts{o}/$1 directory already exists!\nThe old directory has been deleted.\n";
+			system "rm -r $opts{o}/$1";
 		}
 
-		system"mkdir $opts{o8}/$1";
-		open O,">$opts{o8}/$1/$1.chromosome" or die "Could not open outfile.\n";
+		system"mkdir $opts{o}/$1";
+		open O,">$opts{o}/$1/$1.chromosome" or die "Could not open outfile.\n";
         open IN,"<","$file" or die;
         while ($a=<IN>){
 			chomp $a;
@@ -92,20 +96,20 @@ close I;
 ##################################################################
 my $n=0;
 
-if (-d "$opts{o8}/reference_bed") {
-	print "The $opts{o8}/reference_bed directory already exists!\nThe old directory has been deleted.\n";
-	system "rm -r $opts{o8}/reference_bed";
+if (-d "$opts{o}/reference_bed") {
+	print "The $opts{o}/reference_bed directory already exists!\nThe old directory has been deleted.\n";
+	system "rm -r $opts{o}/reference_bed";
 }
 
 
-system "mkdir $opts{o8}/reference_bed";
+system "mkdir $opts{o}/reference_bed";
 open II,"<","$opts{c}" or die;
 while ($a=<II>){
 	chomp $a;
 	$n=$n+1;
 	if ($n==1) {
 		open IN,"<","$opts{im}/$a-$houzhui_name" or die;
-		open O,">","$opts{o8}/reference_bed/$a\_reference.bed" or die;
+		open O,">","$opts{o}/reference_bed/$a\_reference.bed" or die;
 		while ($b=<IN>){
 			chomp $b;
 			if ($b=~/^APCF\.(\S+):/) {
@@ -120,8 +124,8 @@ while ($a=<II>){
 			}
 		}
 		close O;
-		open IN2,"<","$opts{o8}/$a/$a.chromosome" or die;
-		open O2,">","$opts{o8}/$a/$a\_plot.bed" or die;
+		open IN2,"<","$opts{o}/$a/$a.chromosome" or die;
+		open O2,">","$opts{o}/$a/$a\_plot.bed" or die;
 		while ($c=<IN2>){
 			chomp $c;
 			my @it=split/\t/,$c;
@@ -133,7 +137,7 @@ while ($a=<II>){
 	}
 	else{
 		open IN,"<","$opts{im}/$a-$houzhui_name" or die;
-		open O,">","$opts{o8}/reference_bed/$a\_reference.bed" or die;
+		open O,">","$opts{o}/reference_bed/$a\_reference.bed" or die;
 		while ($b=<IN>){
 			chomp $b;
 			if ($b=~/^APCF\.(\S+):(\S+)-(\S+)/) {
@@ -166,10 +170,10 @@ while ($a=<II>){
 	}
 	else {
 		$other_file=$a."_reference.bed";
-		system "bedtools intersect -a $opts{o8}/reference_bed/$hsap_file -b $opts{o8}/reference_bed/$other_file -wo > $opts{o8}/$hsap_name\_$a\_common.bed";
-		system "sort -k 1,1 -k 2n,2 $opts{o8}/$hsap_name\_$a\_common.bed >$opts{o8}/$hsap_name\_$a\_common.bed.sorted";
-		open IN,"<","$opts{o8}/$hsap_name\_$a\_common.bed.sorted" or die;
-		open O,">","$opts{o8}/1.bed" or die;
+		system "bedtools intersect -a $opts{o}/reference_bed/$hsap_file -b $opts{o}/reference_bed/$other_file -wo > $opts{o}/$hsap_name\_$a\_common.bed";
+		system "sort -k 1,1 -k 2n,2 $opts{o}/$hsap_name\_$a\_common.bed >$opts{o}/$hsap_name\_$a\_common.bed.sorted";
+		open IN,"<","$opts{o}/$hsap_name\_$a\_common.bed.sorted" or die;
+		open O,">","$opts{o}/1.bed" or die;
 		while ($b=<IN>){
 			chomp $b;
 			my @it1=split/\t/,$b;
@@ -178,8 +182,8 @@ while ($a=<II>){
 		}
 		close IN;close O;
 		my %h1=();my %h_sum=();
-		open IN,"<","$opts{o8}/1.bed" or die;
-		open O,">","$opts{o8}/2.bed" or die;
+		open IN,"<","$opts{o}/1.bed" or die;
+		open O,">","$opts{o}/2.bed" or die;
 		while ($b=<IN>){
 			chomp $b;
 			my @it1=split/\t/,$b;
@@ -207,8 +211,8 @@ while ($a=<II>){
 		}
 		close IN;close O;
 		my %h_start=();
-		open IN,"<","$opts{o8}/2.bed" or die;
-		open O,">","$opts{o8}/$a/$a\_plot.bed" or die;
+		open IN,"<","$opts{o}/2.bed" or die;
+		open O,">","$opts{o}/$a/$a\_plot.bed" or die;
 		while ($b=<IN>){
 			chomp $b;
 			my @it=split/\t/,$b;
@@ -236,15 +240,15 @@ while ($a=<II>){
 			}
 		}
 		close IN;close O;
-		system "rm $opts{o8}/$hsap_name\_$a\_common.bed";
+		system "rm $opts{o}/$hsap_name\_$a\_common.bed";
 	}
 }
 close II;
 	
-#system "rm $opts{o8}/1.bed";
-#system "rm $opts{o8}/2.bed";
+#system "rm $opts{o}/1.bed";
+#system "rm $opts{o}/2.bed";
 
-open O,">$opts{o8}/color.txt" or die "Could not open outfile.\n";
+open O,">$opts{o}/color.txt" or die "Could not open outfile.\n";
 foreach my $i (keys %jishu) {
 	print O "$i\n";
 }

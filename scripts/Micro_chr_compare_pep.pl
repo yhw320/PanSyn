@@ -5,26 +5,26 @@ my %opts;
 GetOptions(\%opts,"p1=s","p2=s","o=s","a=s","t=s","e=s","m=s","h|help");
 if (!( defined $opts{p1} and defined $opts{p2} and defined $opts{a} and defined $opts{o})) {
 		die "************************************************\n
-	-p1	Full path to the pep file of the reference species
-	-p2	Full path to the pep file of the query species
-	-o	Full path to the [outputDir] folder containing output files
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
+	-p1	Full path to pep file of the reference species
+	-p2	Full path to pep file of the interested species
+	-o	Full path to the [outputDir_S9B] directory
+	-a	Alignment software (diamond or blast)
 	Optional:
-	-t	Protein alignment threads (default:12)
-	-e	Protein alignment evalue (default:1e-5/0.001)
+	-t	Number of threads (default: 12)
+	-e	Sequence alignment E-value (default: 1e-5 for blast, 1e-3 for diamond)
 	-m	The number of best non-self alignment hits (default:1)
 	-h|-help	Print this help page
 		*************************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
-	-p1	Full path to the pep file of the reference species
-	-p2	Full path to the pep file of the query species
-	-o	Full path to the [outputDir] folder containing output files
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
+	-p1	Full path to pep file of the reference species
+	-p2	Full path to pep file of the interested species
+	-o	Full path to the [outputDir_S9B] directory
+	-a	Alignment software (diamond or blast)
 	Optional:
-	-t	Protein alignment threads (default:12)
-	-e	Protein alignment evalue (default:1e-5/0.001)
+	-t	Protein sequence alignment threads (default:12)
+	-e	Protein sequence alignment evalue (default:1e-5/0.001)
 	-m	The number of best non-self alignment hits (default:1)
 	-h|-help	Print this help page
 		*************************************************\n";

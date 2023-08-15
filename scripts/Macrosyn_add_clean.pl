@@ -5,18 +5,20 @@ GetOptions(\%opts,"i1=s","m=s","o1=s","h|help");
 if (!(defined $opts{i1} and defined $opts{m} and defined $opts{o1})) {
 		die "************************************************\n
 Options:
-	-i1	The parameter refers to the same parameter [-i1] used in the previously executed command [Macrosyn1]
-	-m	Enter the abbreviation for the name of the species that represents the ancestral genome (example: NVec)
-	-o1	The parameter refers to the same parameter [-o1] used in the previously executed command [Macrosyn1]
+	-i1	Full path to the [inputDir1_S17] directory
+	-m	The abbreviation for the name of the species that represents the ancestral genome (e.g. NVec)
+	-o1	Full path to the [outputDir1_S17] directory
+	Optional:
 	-h|-help	Print this help page
 		*************************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
 Options:
-	-i1	The parameter refers to the same parameter [-i1] used in the previously executed command [Macrosyn1]
-	-m	Enter the abbreviation for the name of the species that represents the ancestral genome (example: NVec)
-	-o1	The parameter refers to the same parameter [-o1] used in the previously executed command [Macrosyn1]
+	-i1	Full path to the [inputDir1_S17] directory
+	-m	The abbreviation for the name of the species that represents the ancestral genome (e.g. NVec)
+	-o1	Full path to the [outputDir1_S17] directory
+	Optional:
 	-h|-help	Print this help page
 		*************************************************\n";
 }

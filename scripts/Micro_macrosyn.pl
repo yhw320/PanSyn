@@ -8,18 +8,18 @@ GetOptions(\%opts,"i1=s","a=s","t=s","ca=s","ci=s","e=s","o=s","h|help","mk=s","
 if(!(defined $opts{i1} and defined $opts{o})){
 
 	die"**********************************************\n
-	-i1	Full path to the [inputDir1] folder containing input files
-	-o	Full path to the [outputDir] folder containing output files
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
+	-i1	Full path to the [inputDir1_S27] directoryr
+	-o	Full path to the [outputDir_S27] directory
+	-a	Sequence alignment software (diamond or blast)
 	Optional:
-	-t	Protein alignment threads (default:12)
-	-e	Protein alignment evalue (default:1e-5/0.001)
-	-ca	The color of the lines representing conserved both mi-crosynteny and macrosynteny genes in the resulting graph (default: chr5)
-	-ci	The color of the lines representing only conserved microsynteny genes in the resulting graph (default: chr24)
+	-t	Number of threads (default:12)
+	-e	Sequence alignment E-value (default: 1e-5 for blast, 1e-3 for diamond)
+	-ca	The color of the genes conserved both microsynteny and macrosynteny (default: chr5 for red)
+	-ci	The color of the genes only conserved microsynteny (default: chr24 for grey)
 	-mk	MATCH_SCORE, final score=MATCH_SCORE+NUM_GAPS*GAP_PENALTY (default:50)
 	-mg	GAP_PENALTY, gap penalty (default:-1)
 	-ms	MATCH_SIZE, number of genes required to call a microsynteny block (default:5)
-	-me	E_VALUE, alignment significance (default:1e-5)
+	-me	E_VALUE in MCScanX, alignment significance (default:1e-5)
 	-mm	MAX_GAPS, maximum gaps allowed (default:25)
 	-mw	OVERLAP_WINDOW, maximum distance (of genes) to collapse BLAST matches (default:5)
 	-ma	1:Not builds the pairwise blocks; 2:Only builds the pairwise blocks(default:1)
@@ -29,18 +29,18 @@ if(!(defined $opts{i1} and defined $opts{o})){
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
-	-i1	Full path to the [inputDir1] folder containing input files
-	-o	Full path to the [outputDir] folder containing output files
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
+	-i1	Full path to the [inputDir1_S27] directoryr
+	-o	Full path to the [outputDir_S27] directory
+	-a	Sequence alignment software (diamond or blast)
 	Optional:
-	-t	Protein alignment threads (default:12)
-	-e	Protein alignment evalue (default:1e-5/0.001)
-	-ca	The color of the lines representing conserved both mi-crosynteny and macrosynteny genes in the resulting graph (default: chr5)
-	-ci	The color of the lines representing only conserved microsynteny genes in the resulting graph (default: chr24)
+	-t	Number of threads (default:12)
+	-e	Sequence alignment E-value (default: 1e-5 for blast, 1e-3 for diamond)
+	-ca	The color of the genes conserved both microsynteny and macrosynteny (default: chr5 for red)
+	-ci	The color of the genes only conserved microsynteny (default: chr24 for grey)
 	-mk	MATCH_SCORE, final score=MATCH_SCORE+NUM_GAPS*GAP_PENALTY (default:50)
 	-mg	GAP_PENALTY, gap penalty (default:-1)
 	-ms	MATCH_SIZE, number of genes required to call a microsynteny block (default:5)
-	-me	E_VALUE, alignment significance (default:1e-5)
+	-me	E_VALUE in MCScanX, alignment significance (default:1e-5)
 	-mm	MAX_GAPS, maximum gaps allowed (default:25)
 	-mw	OVERLAP_WINDOW, maximum distance (of genes) to collapse BLAST matches (default:5)
 	-ma	1:Not builds the pairwise blocks; 2:Only builds the pairwise blocks(default:1)

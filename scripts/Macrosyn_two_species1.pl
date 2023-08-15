@@ -6,24 +6,26 @@ GetOptions(\%opts,"pairs=s","m=s","n=s","gffm=s","gffn=s","o5=s","len=s","h|help
 if (!(defined $opts{pairs} and defined $opts{m} and defined $opts{n} and defined $opts{gffm} and defined $opts{gffn} and defined $opts{len} and defined $opts{o5})) {
 		die "************************************************\n
 	-pairs	Full path to the [*.pairs] file 
-	-m	Enter the abbreviation for the name of the reference genome A (example: HSap)
-	-n	Enter the abbreviation for the name of the genome B (example: MMus)
-	-gffm	Full path to the simplified GFF file of the reference genome A (example: HSap_simplified.gff)
-	-gffn	Full path to the simplified GFF file of the genome B (example: MMus_simplified.gff)
-	-len	Full path to chromosomal length file of the reference genome A (example: HSap.len)
-	-o5	Full path to the new [outputDir5] directory containing the output files
+	-m	The abbreviation for the name of species A (e.g. HSap)
+	-n	The abbreviation for the name of species B (e.g. MMus)
+	-gffm	Full path to the gene coordinates file of species A (e.g. HSap_simplified.gff)
+	-gffn	Full path to the gene coordinates file of species B (e.g. MMus_simplified.gff)
+	-len	Full path to the chromosomal length file of species A (e.g. HSap.len)
+	-o5	Full path to the new [outputDir_S21] directory
+	Optional:
 	-h|-help Print this help page
 		*************************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
 	-pairs	Full path to the [*.pairs] file 
-	-m	Enter the abbreviation for the name of the reference genome A (example: HSap)
-	-n	Enter the abbreviation for the name of the genome B (example: MMus)
-	-gffm	Full path to the simplified GFF file of the reference genome A (example: HSap_simplified.gff)
-	-gffn	Full path to the simplified GFF file of the genome B (example: MMus_simplified.gff)
-	-len	Full path to chromosomal length file of the reference genome A (example: HSap.len)
-	-o5	Full path to the new [outputDir5] directory containing the output files
+	-m	The abbreviation for the name of species A (e.g. HSap)
+	-n	The abbreviation for the name of species B (e.g. MMus)
+	-gffm	Full path to the gene coordinates file of species A (e.g. HSap_simplified.gff)
+	-gffn	Full path to the gene coordinates file of species B (e.g. MMus_simplified.gff)
+	-len	Full path to the chromosomal length file of species A (e.g. HSap.len)
+	-o5	Full path to the new [outputDir_S21] directory
+	Oprional:
 	-h|-help Print this help page
 		*************************************************\n";
 }

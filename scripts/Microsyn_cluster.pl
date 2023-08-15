@@ -8,26 +8,26 @@ GetOptions(\%opts,"i=s","o1=s","r=s","a=s","t=s","e=s","max=s","h|help");
 if(!(defined $opts{i} and defined $opts{o1} and defined $opts{r} and defined $opts{a})){
 
 	die"**********************************************\n
-	-i	Full path to the [inputDir] directory containing input files
-	-o1	Full path to the [outputDir1] directory containing output files
-	-r	Enter the abbreviated name of the reference species (example: HSap)
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
+	-i	Full path to the [inputDir_S11] directory
+	-o1	Full path to the [outputDir1_S11] directory
+	-r	The abbreviation of the reference species name (e.g. HSap)
+	-a	Sequence alignment software (diamond or blast)
 	Optional:
-	-max	The number of best non-self alignment hits (default:5)
-	-t	Protein alignment threads (default:12)
-	-e	Protein alignment evalue (default:1e-5/0.001)
+	-max	The number of best non-self alignment hits (default: 5)
+	-t	Number of threads (default: 12)
+	-e	Sequence alignment E-value (default: 1e-5 for blast, 1e-3 for diamond)
 		*********************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
 	die"**********************************************\n
-	-i	Full path to the [inputDir] directory containing input files
-	-o1	Full path to the [outputDir1] directory containing output files
-	-r	Enter the abbreviated name of the reference species (example: HSap)
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
+	-i	Full path to the [inputDir_S11] directory
+	-o1	Full path to the [outputDir1_S11] directory
+	-r	The abbreviation of the reference species name (e.g. HSap)
+	-a	Sequence alignment software (diamond or blast)
 	Optional:
-	-max	The number of best non-self alignment hits (default:5)
-	-t	Protein alignment threads (default:12)
-	-e	Protein alignment evalue (default:1e-5/0.001)
+	-max	The number of best non-self alignment hits (default: 5)
+	-t	Number of threads (default: 12)
+	-e	Sequence alignment E-value (default: 1e-5 for blast, 1e-3 for diamond)
 		*********************************************\n";
 }
 

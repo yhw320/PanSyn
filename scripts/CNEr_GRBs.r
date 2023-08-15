@@ -54,7 +54,7 @@ outputDir <- args[1]
 grbsSpecies <- makeGRBs(grangesList, winSize=win, genes=NULL, ratio=ratio,
                          background="genome", minCNEs=min)
 
-export.bed(grbsSpecies, paste0(outputDir, "grbsSpeA-SpeB_", ar1 ,"_", ar2, ".bed"))
+export.bed(grbsSpecies, paste0(outputDir, "/","grbsSpeA-SpeB_", ar1 ,"_", ar2, ".bed"))
 
 # 恢复默认的临时文件夹路径
 tempdir(old_tempdir)

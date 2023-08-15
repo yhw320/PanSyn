@@ -5,21 +5,23 @@ my %opts;
 GetOptions(\%opts,"i1=s","m=s","n=s","gff=s","o1=s","h|help");
 if (!(defined $opts{i1} and defined $opts{m} and defined $opts{n} and defined $opts{gff} and defined $opts{o1})) {
 		die "************************************************\n
-	-i1	The parameter refers to the same parameter [-i1] used in the previously executed command [Macrosyn1]
-	-m	Enter the abbreviation for the name of the species that represents the ancestral genome (example: NVec)
-	-n	Enter the abbreviation for the name of the interested species (example: HSap)
-	-gff	Full path to the simplified GFF file of the interested species (example: HSap_simplified.gff)
-	-o1	The parameter refers to the same parameter [-o1] used in the previously executed commmand [Macrosyn1]
+	-i1	Full path to the [inputDir1_S17] directory
+	-m	The abbreviation for the name of the species that represents the ancestral genome (e.g. NVec)
+	-n	The abbreviation for the name of the interested species (e.g. HSap)
+	-gff	Full path to the gene coordinates file of the interested species (e.g. HSap_simplified.gff)
+	-o1	Full path to the [outputDir1_S17] directory
+	Optional:
 	-h|-help Print this help page
 		*************************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
-	-i1	The parameter refers to the same parameter [-i1] used in the previously executed command [Macrosyn1]
-	-m	Enter the abbreviation for the name of the species that represents the ancestral genome (example: NVec)
-	-n	Enter the abbreviation for the name of the interested species (example: HSap)
-	-gff	Full path to the simplified GFF file of the interested species (example: HSap_simplified.gff)
-	-o1	The parameter refers to the same parameter [-o1] used in the previously executed command [Macrosyn1]
+	-i1	Full path to the [inputDir1_S17] directory
+	-m	The abbreviation for the name of the species that represents the ancestral genome (e.g. NVec)
+	-n	The abbreviation for the name of the interested species (e.g. HSap)
+	-gff	Full path to the gene coordinates file of the interested species (e.g. HSap_simplified.gff)
+	-o1	Full path to the [outputDir1_S17] directory
+	Optional:
 	-h|-help Print this help page
 		*************************************************\n";
 }

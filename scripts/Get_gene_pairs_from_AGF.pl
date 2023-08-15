@@ -1,29 +1,28 @@
-#!/usr/bin/perl -w
-#use strict;
+#!/usr/bin/perl 
 use Getopt::Long;
 my %opts;
 GetOptions(\%opts,"i1=s","m=s","n=s","o1=s","o3=s","e=s","h|help");
 if (!(defined $opts{i1} and defined $opts{m} and defined $opts{n} and defined $opts{o1} and defined $opts{o3})) {
 		die "************************************************\n
-	-i1	The parameter refers to the same parameter [-i1] used in the previously executed command [Macrosyn1]
-	-m	Enter the abbreviation for the name of the species representing the ancestral genome (example: NVec)
-	-n	Enter the abbreviation for the name of the interested species (example: HSap)
-	-o1	The parameter refers to the same parameter [-o1] used in the previously executed command [Macrosyn1]
-	-o3	Full path to the new [outputDir3] directory containing output files
+	-i1	Full path to the [inputDir1_S17] directory
+	-m	The abbreviation for the name of the species representing the ancestral genome (e.g. NVec)
+	-n	The abbreviation for the name of the interested species (e.g. HSap)
+	-o1	Full path to the [outputDir1_S17] directory
+	-o3	Full path to the [outputDir3_S19] directory
 	Optional:
-	-e	Protein alignment evalue (default:1e-5)
+	-e	Sequence alignment E-value (default: 1e-5)
 	-h|-help Print this help page
 		*************************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
-	-i1	The parameter refers to the same parameter [-i1] used in the previously executed command [Macrosyn1]
-	-m	Enter the abbreviation for the name of the species representing the ancestral genome (example: NVec)
-	-n	Enter the abbreviation for the name of the interested species (example: HSap)
-	-o1	The parameter refers to the same parameter [-o1] used in the previously executed command [Macrosyn1]
-	-o3	Full path to the new [outputDir3] directory containing output files
+	-i1	Full path to the [inputDir1_S17] directory
+	-m	The abbreviation for the name of the species representing the ancestral genome (e.g. NVec)
+	-n	The abbreviation for the name of the interested species (e.g. HSap)
+	-o1	Full path to the [outputDir1_S17] directory
+	-o3	Full path to the [outputDir3_S19] directory
 	Optional:
-	-e	Protein alignment evalue (default:1e-5)
+	-e	Sequence alignment E-value (default: 1e-5)
 	-h|-help Print this help page
 		*************************************************\n";
 }

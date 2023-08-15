@@ -7,17 +7,17 @@ my %opts;
 GetOptions(\%opts,"i=s","o=s","a=s","t=s","e=s","s=s","h|help","mk=s","mg=s","ms=s","me=s","mm=s","mw=s","ma=s","mb=s");
 if(!(defined $opts{i} and defined $opts{o})){
 	die"**********************************************\n
-	-i	Full path to the [inputDir] directory containing input files
-	-o	Full path to the [outputDir] directory containing output files
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
+	-i	Full path to the [inputDir_S1] directory
+	-o	Full path to the [outputDir_S1] directory
+	-a	Sequence alignment software (diamond or blast)
 	Optional:
-	-t	Protein alignment threads (default:12)
-	-e	Protein alignment evalue (default:1e-5)
-	-s	The number of best non-self alignment hits (default:5)
+	-t	Number of threads (default: 12)
+	-e	Sequence alignment E-value (default: 1e-5 for blast, 1e-3 for diamond)
+	-s	Number of best non-self alignment hits (default: 5)
 	-mk	MATCH_SCORE, final score=MATCH_SCORE+NUM_GAPS*GAP_PENALTY (default:50)
 	-mg	GAP_PENALTY, gap penalty (default:-1)
 	-ms	MATCH_SIZE, number of genes required to call a collinear block (default:5)
-	-me	E_VALUE, alignment significance (default:1e-5/0.001)
+	-me	E_VALUE in MCScanX, alignment significance (default:1e-5/0.001)
 	-mm	MAX_GAPS, maximum gaps allowed (default:25)
 	-mw	OVERLAP_WINDOW, maximum distance (of genes) to collapse BLAST matches (default:5)
 	-ma	1:Not only builds the pairwise blocks; 2:Only builds the pairwise blocks(default:1)
@@ -27,21 +27,21 @@ if(!(defined $opts{i} and defined $opts{o})){
 
 if (defined $opts{h} or defined $opts{help}) {
 	die"**********************************************\n
-	-i	Full path to the [inputDir] directory containing input files
-	-o	Full path to the [outputDir] directory containing output files
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
+	-i	Full path to the [inputDir_S1] directory
+	-o	Full path to the [outputDir_S1] directory
+	-a	Sequence alignment software (diamond or blast)
 	Optional:
-	-t	Protein alignment threads (default:12)
-	-e	Protein alignment evalue (default:1e-5)
-	-s	The number of best non-self alignment hits (default:5)
+	-t	Number of threads (default: 12)
+	-e	Sequence alignment E-value (default: 1e-5 for blast, 1e-3 for diamond)
+	-s	Number of best non-self alignment hits (default: 5)
 	-mk	MATCH_SCORE, final score=MATCH_SCORE+NUM_GAPS*GAP_PENALTY (default:50)
 	-mg	GAP_PENALTY, gap penalty (default:-1)
 	-ms	MATCH_SIZE, number of genes required to call a collinear block (default:5)
-	-me	E_VALUE, alignment significance (default:1e-5/0.001)
+	-me	E_VALUE in MCScanX, alignment significance (default:1e-5/0.001)
 	-mm	MAX_GAPS, maximum gaps allowed (default:25)
 	-mw	OVERLAP_WINDOW, maximum distance (of genes) to collapse BLAST matches (default:5)
-	-ma	1:Not only builds the pairwise blocks; 2:Only builds the pairwise blocks (default:1)
-	-mb	Patterns of collinear blocks. 0:intra- and inter-species; 1:intra-species; 2:inter-species (default:0)
+	-ma	1:Not only builds the pairwise blocks; 2:Only builds the pairwise blocks(default:1)
+	-mb	Patterns of collinear blocks. 0:intra- and inter-species (default); 1:intra-species; 2:inter-species
 		*********************************************\n";
 }
 

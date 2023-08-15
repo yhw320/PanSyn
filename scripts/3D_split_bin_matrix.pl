@@ -5,20 +5,20 @@ my %opts;
 GetOptions(\%opts,"i=s","b=s","a=s","o=s","h|help");            
 if ( !(defined $opts{i} and defined $opts{b} and defined $opts{a} and defined $opts{o}) ) {
     die "********************************************************
-	-i	Full path to the [*.matrix] file (example:500k_iced.matrix)
-	-b	Full path to the [*.bed] file (example:500k_abs.bed)
-	-a	Enter the name of the chromosome of interest (e.g. chr1) or type [genome] to include all chromosomes.
-	-o	Full path to the [outputDir] directory cotaining output files
+	-i	Full path to the [*.matrix] file (e.g. 500k_iced.matrix)
+	-b	Full path to the [*.bed] file (e.g. 500k_abs.bed)
+	-a	The name of the chromosome of interest (e.g. chr1)
+	-o	Full path to the [outputDir_S29] directory
 	optional:
 	-h|-help Print this help page
 *********************************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
-	-i	Full path to the [*.matrix] file (example:500k_iced.matrix)
-	-b	Full path to the [*.bed] file (example:500k_abs.bed)
-	-a	Enter the name of the chromosome of interest (e.g. chr1) or type [genome] to include all chromosomes.
-	-o	Full path to the [outputDir] directory cotaining output files
+	-i	Full path to the [*.matrix] file (e.g. 500k_iced.matrix)
+	-b	Full path to the [*.bed] file (e.g. 500k_abs.bed)
+	-a	The name of the chromosome of interest (e.g. chr1)
+	-o	Full path to the [outputDir_S29] directory
 	optional:
 	-h|-help Print this help page
 		*************************************************\n";

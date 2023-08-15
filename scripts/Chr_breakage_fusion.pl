@@ -2,50 +2,63 @@
 #use strict;
 use Getopt::Long;
 my %opts;
-GetOptions(\%opts,"i2=s","t=s"","color=s","o6=s","width=s","height=s","h|help");
-if (!( defined $opts{i2} and defined $opts{t} and defined $opts{color} and defined $opts{o6})) {
+GetOptions(\%opts,"i=s","t=s","color=s","o=s","width=s","height=s","pansyn=s","h|help");
+if (!( defined $opts{i} and defined $opts{t} and defined $opts{color} and defined $opts{o} and defined $opts{pansyn})) {
 		die "************************************************\n
-	-i2	Full path to the new [inputDir2] directory containing input files
-	-t	Full path to the [tree.nwk] file
-	-color	Full path to the Ancestor'chromosome color file
-	-o6	Full path to the new [outputDir6] directory storing the output files
-	-h|-help Print this help page
+	-i	Full path to the [inputDir_S23] directory
+	-t	Full path to the [tree.tre] file
+	-color	Full path to the [*_ancestor_chr_color.txt] file
+	-o	Full path to the [outputDir_S23] directory
+	-pansyn Full path the [scripts] provided by PanSyn
 	-Optional:
-	-width	Specify the width of the output image (default: 22)
-	-height	Specify the height of the output image (default: 4)
+	-width	The width of the output image (default: 22)
+	-height	The height of the output image (default: 4)
+	-h|-help Print this help page
 		*************************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
-	-i2	Full path to the new [inputDir2] directory containing input files
-	-t	Full path to the [tree.nwk] file
-	-color	Full path to the Ancestor'chromosome color file
-	-o6	Full path to the new [outputDir6] directory storing the output files
-	-h|-help Print this help page
+	-i	Full path to the [inputDir_S23] directory
+	-t	Full path to the [tree.tre] file
+	-color	Full path to the [*_ancestor_chr_color.txt] file
+	-o	Full path to the [outputDir_S23] directory
+	-pansyn Full path the [scripts] provided by PanSyn
 	-Optional:
-	-width	Specify the width of the output image (default: 22)
-	-height	Specify the height of the output image (default: 4)
+	-width	The width of the output image (default: 22)
+	-height	The height of the output image (default: 4)
+	-h|-help Print this help page
 		*************************************************\n";
 }
 my $slash;
 ###
-if ($opts{i2} =~ /(\/)$/) {
+if ($opts{i} =~ /(\/)$/) {
     # 存储捕获的结果
     $slash = $1;
 
     # 删除末尾的 /
-    $opts{i2} =~ s/$slash$//;
+    $opts{i} =~ s/$slash$//;
 }
 ####
 ###
-if ($opts{o6} =~ /(\/)$/) {
+if ($opts{o} =~ /(\/)$/) {
     # 存储捕获的结果
     $slash = $1;
 
     # 删除末尾的 /
-    $opts{o6} =~ s/$slash$//;
+    $opts{o} =~ s/$slash$//;
 }
 ####
+
+###
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
+}
+####
+
 
 if (!(defined $opts{width})) {
 	$opts{width}=22;
@@ -54,13 +67,13 @@ if (!(defined $opts{height})) {
 	$opts{height}=4;
 }
 
-my $dir1=$opts{i2};
+my $dir1=$opts{i};
 opendir P,$dir1;
 while (my $c=readdir P) {
 	if ( $c=~/^(\S+)_chr_breakage_fusion.result$/ ) {
 		my $file=$dir1."/$c";
 		open I,"<$file" or die("Could not open $file\n"); 
-		open O,"> $opts{o6}/$c";
+		open O,"> $opts{o}/$c";
 	    while (my $a=<I>) {
 		    chomp $a;
 			if ($a=~/Ancestor/ and $a=~/Chr/) {
@@ -80,10 +93,10 @@ while (my $c=readdir P) {
 }
 close P;
 
-system "infer_chr_fusion --tree_dir \"$opts{t}\" --work_space \"$opts{o6}\" ";
+system "python $opts{pansyn}/infer_chr_fusion.py --tree_dir \"$opts{t}\" --work_space \"$opts{o}\" ";
 ##########
 open I,"< $opts{color}";
-open O,"> $opts{o6}/color.txt";
+open O,"> $opts{o}/color.txt";
 while (my $a=<I>) {
 	chomp $a;
 	my @it=split/\t/,$a;
@@ -93,14 +106,14 @@ close I;close O;
 
 #########
 
-$dir2="$opts{o6}/ancestor";
+$dir2="$opts{o}/ancestor";
 opendir P,$dir2;
 while (my $c=readdir P) {
 	if ( $c=~/^(\S+)_anc.result$/ ) {
 		$out_name=$1;
 		my $file=$dir2."/$c";
 		open I,"<$file" or die("Could not open $file\n"); 
-		open O,"> $opts{o6}/$c-R";
+		open O,"> $opts{o}/$c-R";
 		my %jishu=();
 	    while (my $a=<I>) {
 		    chomp $a;
@@ -129,7 +142,7 @@ while (my $c=readdir P) {
 		}
 		close I;
 		close O;
-		system "Chr_breakage_fusion2 $opts{o6} $opts{o6}/color.txt $opts{o6}/$c-R $out_name $opts{width} $opts{height}";
+		system "Rscript $opts{pansyn}/Chr_breakage_fusion2.R $opts{o} $opts{o}/color.txt $opts{o}/$c-R $out_name $opts{width} $opts{height}";
 	}
 }
 close P;

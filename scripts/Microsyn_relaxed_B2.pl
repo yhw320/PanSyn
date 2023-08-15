@@ -2,13 +2,14 @@
 use strict;
 use Getopt::Long;
 my %opts;
-GetOptions(\%opts,"o2=s","node=s","n=s","tre=s","pl=s","ps=s","pk=s","pr=s","spenum2=s","h|help");
-if (!( defined $opts{o2} and defined $opts{node} and defined $opts{tre} and defined $opts{n})) {
+GetOptions(\%opts,"pansyn=s","o2=s","node=s","n=s","tre=s","pl=s","ps=s","pk=s","pr=s","spenum2=s","h|help");
+if (!( defined $opts{o2} and defined $opts{pansyn} and defined $opts{node} and defined $opts{tre} and defined $opts{n})) {
 		die "************************************************\n
-	-o2	The parameter refers to the same parameter [-o2] used in the previously executed command [Microsyn_relaxed_B1]
-	-node	The name of the internal node at which to identify con-served microsynteny gene clusters (example: Ancestor1)
+	-o2	Full path to the [outputDir2_S30] directory
+	-node	The name of the evolution nodes of interest (e.g. Ancestor1)
 	-tre	Full path to the [*.tre] file
-	-n	The distance threshold above which syntenic blocks will be split (an appropriate threshold in the xleft column of the [nmax_test.inflection.csv] file)
+	-n	The distance threshold above which syntenic blocks will be split (the value in the x-left column of the [nmax_test.inflection.csv])
+	-pansyn Full path the [scripts] provided by PanSyn
 	optional:
 	-pl	Minimum number of OG co-occurrences between two extant species blocks (default: 3)
 	-ps	Minimum overlap coefficient between the OG occurrences of two extant species blocks (scaffolds, default: 3)
@@ -20,13 +21,14 @@ if (!( defined $opts{o2} and defined $opts{node} and defined $opts{tre} and defi
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
-	-o2	Full path to the new folder containing results (same as [-o2] in the previous command [Microsyn_relaxed_B1])
-	-node	The name of the internal node at which to identify con-served microsynteny gene clusters (example: Ancestor1)
+	-o2	Full path to the [outputDir2_S30] directory
+	-node	The name of the evolution nodes of interest (e.g. Ancestor1)
 	-tre	Full path to the [*.tre] file
-	-n	The distance threshold above which syntenic blocks will be split (an appropriate threshold in the xleft column of the [nmax_test.inflection.csv] file)
+	-n	The distance threshold above which syntenic blocks will be split (the value in the x-left column of the [nmax_test.inflection.csv])
+	-pansyn Full path the [scripts] provided by PanSyn
 	optional:
 	-pl	Minimum number of OG co-occurrences between two extant species blocks (default: 3)
-	-ps	Minimum overlap coefficient between the OG occurrences of two extant species blocks (scaffolds, default: 0.5)
+	-ps	Minimum overlap coefficient between the OG occurrences of two extant species blocks (scaffolds, default: 3)
 	-pk	Minimum number of edges per community/multispecies block (if k = 3 then a multispecies block is only retained if it is conserved across at least three species, default: 3)
 	-pr	Percentage of OGs of the ancestral syntenic block that an extant species block should possess to be retained (default: 0.3)
 	-spenum2	Minimum number of species of a phylogenetic clade that must possess a syntenic OG pair (default: 3)
@@ -45,6 +47,15 @@ if ($opts{o2} =~ /(\/)$/) {
 }
 ####
 
+####
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
+}
+####
 
 
 if (!(defined $opts{pl})) {
@@ -64,13 +75,13 @@ if (!(defined $opts{spenum2})) {
 }
 
 #chdir "$opts{o2}";
-system "step3_find_og_commus $opts{o2}/$opts{node}-myresults/bynode/$opts{node}/m_$opts{spenum2}/$opts{node}-myresults.m_$opts{spenum2}.$opts{node}.dist  -n $opts{n} -o $opts{o2}/$opts{node}-myresults/bynode/$opts{node}.og_commus";
+system "python $opts{pansyn}/step3_find_og_commus.py $opts{o2}/$opts{node}-myresults/bynode/$opts{node}/m_$opts{spenum2}/$opts{node}-myresults.m_$opts{spenum2}.$opts{node}.dist  -n $opts{n} -o $opts{o2}/$opts{node}-myresults/bynode/$opts{node}.og_commus";
 
-system "step4_OG_communities_to_blocks_graph_check $opts{o2}/$opts{node}-myresults/bynode/$opts{node}.og_commus.csv -g $opts{o2}/$opts{node}-myresults/bynode/$opts{node}.og_commus.gpickle -c $opts{o2}/$opts{node}-myresults/chromdata.pickle -o $opts{o2}/$opts{node}-myresults/$opts{node}_blocks -l $opts{pl} -s $opts{ps} -k $opts{pk} -r $opts{pr}";
+system "python $opts{pansyn}/step4_OG_communities_to_blocks_graph_check.py $opts{o2}/$opts{node}-myresults/bynode/$opts{node}.og_commus.csv -g $opts{o2}/$opts{node}-myresults/bynode/$opts{node}.og_commus.gpickle -c $opts{o2}/$opts{node}-myresults/chromdata.pickle -o $opts{o2}/$opts{node}-myresults/$opts{node}_blocks -l $opts{pl} -s $opts{ps} -k $opts{pk} -r $opts{pr}";
 
-system "BlocksByNode -c $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.clusters -b $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.synt -s $opts{tre} -n $opts{node} -m $opts{spenum2} -r blocks_list -t total > $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.taxonomy_filtered_total.synt";
-system "BlocksByNode -c $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.clusters -b $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.synt -s $opts{tre} -n $opts{node} -m $opts{spenum2} -r blocks_list -t novel > $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.taxonomy_filtered_novel.synt";
-system "BlocksByNode -c $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.clusters -b $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.synt -s $opts{tre} -n $opts{node} -m $opts{spenum2} -r blocks_list -t ancestral > $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.taxonomy_filtered_ancestral.synt";
+system "python $opts{pansyn}/BlocksByNode.py -c $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.clusters -b $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.synt -s $opts{tre} -n $opts{node} -m $opts{spenum2} -r blocks_list -t total > $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.taxonomy_filtered_total.synt";
+system "python $opts{pansyn}/BlocksByNode.py -c $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.clusters -b $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.synt -s $opts{tre} -n $opts{node} -m $opts{spenum2} -r blocks_list -t novel > $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.taxonomy_filtered_novel.synt";
+system "python $opts{pansyn}/BlocksByNode.py -c $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.clusters -b $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.synt -s $opts{tre} -n $opts{node} -m $opts{spenum2} -r blocks_list -t ancestral > $opts{o2}/$opts{node}-myresults/$opts{node}_blocks.len$opts{pl}.ol$opts{ps}.taxonomy_filtered_ancestral.synt";
 
 
 ##

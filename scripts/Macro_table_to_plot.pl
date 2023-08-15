@@ -3,43 +3,47 @@ use Getopt::Long;
 my %opts;
 use lib;
 use SVG;
-GetOptions(\%opts,"i1=s","m=s","n=s","e=s","c=s","color=s","gff=s","g=s","p=s","name1=s","name2=s","o4=s","h|help");
-if (defined $opts{h} or defined $opts{help}) {
+GetOptions(\%opts,"pansyn=s","i1=s","m=s","n=s","e=s","c=s","color=s","gff=s","g=s","p=s","name1=s","name2=s","pairs2=s","o4=s","h|help");
+if (defined $opts{h} or defined $opts{help} and defined $opts{pansyn}) {
 		die "************************************************\n
-	-i1	The parameter refers to the same parameter [-i1] used in the previously executed command [Macrosyn1]
-	-m	Enter the abbreviation for the name of the species representing the ancestral genome (example: NVec)
-	-n	Enter the abbreviation for the name of the interested species (example: HSap)
-	-o4	The parameter refers to the same parameter [-o4] in the previous command [Pairs_to_table])
-	-gff	Full path to the simplified GFF file of the interested species (example: HSap_simplified.gff)
-	-g	Full path to the genome file of the interested species
-	-color	Full path to the ancestral chromosome color file
+	-i1	Full path to the [outputDir1_S17] directory
+	-m	The abbreviation for the name of the species representing the ancestral genome (e.g. NVec)
+	-n	The abbreviation for the name of the interested species (e.g. HSap)
+	-o4	Full path to the [outputDir4_S19] directory
+	-gff	Full path to the gene coordinates file of the interested species (e.g. HSap_simplified.gff)
+	-g	Full path to the genome sequence file of the interested species
+	-color	Full path to the [*_ancestor_chr_color.txt] file
+	-pairs2	Full path to the [*.pairs2.score] file
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
-	-c	Specify whether to cluster the scaffolds (It can be set to 1 or 2)
-		1: For species without chromosome-level assemblies
+	-c	Specify whether to cluster the scaffolds (1 or 2, default: 2)
+		1: For species with scaffold-level assemblies
 		2: For species with chromosome-level assemblies
-	-e	Value indicating the tree-cutting threshold of 0.2-0.5 (default:0.5)
-	-p	Pvalue for significance test (default: 0.05)
+	-e	The value indicating the tree-cutting threshold of 0.2-0.5 (default: 0.5)
+	-p	P-value (default: 0.05)
 	-name1	Ancestor'name shown on the resulting graph (default: same as -m)
 	-name2	Interested species'name shown on the resulting graph (default: same as -n)
 	-h|-help Print this help page
 		*************************************************\n";
 }
 
-if (!(defined $opts{i1} and defined $opts{m} and defined $opts{color} and defined $opts{n} and defined $opts{gff} and defined $opts{g}  and defined $opts{o4})) {
+if (!(defined $opts{i1} and defined $opts{m} and defined $opts{color} and defined $opts{n} and defined $opts{gff} and defined $opts{g}  and defined $opts{o4} and defined $opts{pairs2})) {
 		die "************************************************\n
-	-i1	The parameter refers to the same parameter [-i1] used in the previously executed command [Macrosyn1]
-	-m	Enter the abbreviation for the name of the species representing the ancestral genome (example: NVec)
-	-n	Enter the abbreviation for the name of the interested species (example: HSap)
-	-o4	The parameter refers to the same parameter [-o4] in the previous command [Pairs_to_table])
-	-gff	Full path to the simplified GFF file of the interested species (example: HSap_simplified.gff)
-	-g	Full path to the genome file of the interested species
-	-color	Full path to the ancestral chromosome color file
+	-i1	Full path to the [outputDir1_S17] directory
+	-m	The abbreviation for the name of the species representing the ancestral genome (e.g. NVec)
+	-n	The abbreviation for the name of the interested species (e.g. HSap)
+	-o4	Full path to the [outputDir4_S19] directory
+	-gff	Full path to the gene coordinates file of the interested species (e.g. HSap_simplified.gff)
+	-g	Full path to the genome sequence file of the interested species
+	-color	Full path to the [*_ancestor_chr_color.txt] file
+	-pairs2	Full path to the [*.pairs2.score] file
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
-	-c	Specify whether to cluster the scaffolds (It can be set to 1 or 2)
-		1: For species without chromosome-level assemblies
+	-c	Specify whether to cluster the scaffolds (1 or 2, default: 2)
+		1: For species with scaffold-level assemblies
 		2: For species with chromosome-level assemblies
-	-e	Value indicating the tree-cutting threshold of 0.2-0.5 (default:0.5)
-	-p	Pvalue for significance test (default: 0.05)
+	-e	The value indicating the tree-cutting threshold of 0.2-0.5 (default: 0.5)
+	-p	P-value (default: 0.05)
 	-name1	Ancestor'name shown on the resulting graph (default: same as -m)
 	-name2	Interested species'name shown on the resulting graph (default: same as -n)
 	-h|-help Print this help page
@@ -63,6 +67,15 @@ if ($opts{o4} =~ /(\/)$/) {
     $opts{o4} =~ s/$slash$//;
 }
 ###
+####
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
+}
+####
 
 if (!(defined $opts{e})) {
 	$opts{e}=0.5;
@@ -177,7 +190,7 @@ if ($chromosome==2) {
 	system "rm $pathway/$nv_cg/$nv_cg.scaff.match.table-and";
 	system "rm $pathway/$nv_cg/$nv_cg.scaff.match.table-reverse";
     plot_dot_hd2($pathway_block,$spename1,$nv_cg,$spename2,$pathway_genome);
-    plot_dot_hd22($pathway_block,$spename1,$nv_cg,$spename2,$pathway_genome;
+    plot_dot_hd22($pathway_block,$spename1,$nv_cg,$spename2,$pathway_genome);
 	#system"perl scripts/plot_dot_hd.pl $pathway_block/$spename1.block $pathway_genome/$spename2.fa.len $pathway/$nv_cg/$nv_cg.scaff.match.table $pathway/$nv_cg/$nv_cg";
 }
 
@@ -768,7 +781,7 @@ sub plot_dot_hd12{
 	system "rm $pathway/$nv_cg/result";
 	system "rm $pathway/$nv_cg/sum-result";
 	system "rm $pathway/$nv_cg/result-reverse";
-	system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+	system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 	open I,"<$pathway/$nv_cg/$fi";
 	open O,">$pathway/$nv_cg/first_line";
 	while ($a=<I>){
@@ -1013,7 +1026,7 @@ sub plot_dot_hd22{
 	system "rm $pathway/$nv_cg/result";
 	system "rm $pathway/$nv_cg/sum-result";
 	system "rm $pathway/$nv_cg/result-reverse";
-	system "Fish $pathway/$name $pathway/$nv_cg/sum-table";
+	system "Rscript $opts{pansyn}/Fish.R $pathway/$name $pathway/$nv_cg/sum-table";
 	open I,"<$pathway/$nv_cg/$name.scaff.match.table";
 	open O,">$pathway/$nv_cg/first_line";
 	while ($a=<I>){
@@ -1309,7 +1322,7 @@ sub getseqpair{
 			my @items=split/\t/,$a;
 			$h1{$items[1]}=$items[0];
 		}
-		open I,"<$opts{o4}/$spename1\_$spename2.pairs2.score";
+		open I,"<$opts{pairs2}";
 		open O,">$opts{o4}/$nv_cg/Macrosyn_genes/pair3";
 		while ($b=<I>){
 			chomp $b;
@@ -1615,7 +1628,7 @@ sub getseqpair{
 			@items=split/\t/,$a;
 			$h1{$items[1]}=$items[0];
 		}
-		open I,"<$opts{o4}/$nv_cg.pairs2.score";
+		open I,"<$opts{pairs2}";
 		open O,">$opts{o4}/$nv_cg/Macrosyn_genes/pair3";
 		while ($b=<I>){
 			chomp $b;
@@ -2021,7 +2034,7 @@ foreach my $i (sort keys %h_numpai) {
 }
 close O;
 
-system "Chr_breakage_fusion1 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o4}/formatted_ancestor_chr_color.txt";
+system "Rscript $opts{pansyn}/Chr_breakage_fusion1.R $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R $pathway/$nv_cg/chr_breakage_fusion_result $opts{m}_$opts{n} $h_nv $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R5 $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R7 $opts{o4}/formatted_ancestor_chr_color.txt";
 
 system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R";
 system "rm $pathway/$nv_cg/chr_breakage_fusion_result/chr_breakage_fusion_result_for_R1";

@@ -2,30 +2,32 @@
 #use strict;
 use Getopt::Long;
 my %opts;
-GetOptions(\%opts,"i=s","o=s","color=s","r=s","w=s","sl=s","m=s","h|help");
-if (!( defined $opts{i} and defined $opts{o} and defined $opts{color} and defined $opts{r})) {
+GetOptions(\%opts,"pansyn=s","i=s","o=s","color=s","r=s","w=s","sl=s","m=s","h|help");
+if (!( defined $opts{i} and defined $opts{o} and defined $opts{color} and defined $opts{r} and defined $opts{pansyn})) {
 		die "************************************************\n
-	-i	Full path to the [inputDir] directoty containing input files
-	-r	Enter the abbreviated name of the reference spe-cies (example: HSap)
-	-o	Full path to the [outputDir] directoty containing output files
-	-color	Full path to the [*.color] file containing the color information for chromosomes
+	-i	Full path to the [inputDir_S9A] directoty
+	-r	The abbreviation name of the reference species name (e.g. HSap)
+	-o	Full path to the [outputDir_S9A] directoty
+	-color	Full path to the [*.color] file
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
-	-w	Window size (default:10)
-	-sl	Slide size (default:5)
-	-m	Max distance (bp) between orthologs (default:50000000)
+	-w	Number of windows (default: 10)
+	-sl	Number of sliding windows (default: 5)
+	-m	Max distance (bp) between orthologs (default: 5000000)
 	-h|-help	Print this help page
 		*************************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}) {
 		die "************************************************\n
-	-i	Full path to the [inputDir] directoty containing input files
-	-r	Enter the abbreviated name of the reference spe-cies (example: HSap)
-	-o	Full path to the [outputDir] directoty containing output files
-	-color	Full path to the [*.color] file containing the color information for chromosomes
+	-i	Full path to the [inputDir_S9A] directoty
+	-r	The abbreviation name of the reference species name (e.g. HSap)
+	-o	Full path to the [outputDir_S9A] directoty
+	-color	Full path to the [*.color] file
+	-pansyn Full path the [scripts] provided by PanSyn
 	Optional:
-	-w	Window size (default:10)
-	-sl	Slide size (default:5)
-	-m	Max distance (bp) between orthologs (default:50000000)
+	-w	Number of windows (default: 10)
+	-sl	Number of sliding windows (default: 5)
+	-m	Max distance (bp) between orthologs (default: 5000000)
 	-h|-help	Print this help page
 		*************************************************\n";
 }
@@ -47,6 +49,15 @@ if ($opts{o} =~ /(\/)$/) {
 
     # 删除末尾的 /
     $opts{o} =~ s/$slash$//;
+}
+####
+####
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
 }
 ####
 
@@ -160,7 +171,7 @@ while (my $c=readdir P) {
 		close O;
 		system "sort -k 1,1 -k 3n,3 $opts{o}/$opts{r}_$mm_name.msynt >$opts{o}/$opts{r}_$mm_name.sorted.msynt";
 		system "sort -k 1,1 -k 3n,3 $opts{o}/$mm_name\_$opts{r}.msynt >$opts{o}/$mm_name\_$opts{r}.sorted.msynt";
-		system "drawCLGContrib2.4_2 $opts{o}/$opts{r}_$mm_name.sorted.msynt:,algcolor=$opts{o}/$opts{r}_$mm_name.sorted.msynt:type=alg,file=$opts{o}/$opts{r}_$mm_name.lab,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} $opts{o}/$mm_name\_$opts{r}.sorted.msynt:,algcolor=$opts{o}/$opts{r}_$mm_name.sorted.msynt:type=alg,file=$opts{o}/$opts{r}_$mm_name.lab,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} > $opts{o}/$opts{r}_$mm_name.svg";
+		system "perl $opts{pansyn}/drawCLGContrib2.4_2.pl $opts{o}/$opts{r}_$mm_name.sorted.msynt:,algcolor=$opts{o}/$opts{r}_$mm_name.sorted.msynt:type=alg,file=$opts{o}/$opts{r}_$mm_name.lab,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} $opts{o}/$mm_name\_$opts{r}.sorted.msynt:,algcolor=$opts{o}/$opts{r}_$mm_name.sorted.msynt:type=alg,file=$opts{o}/$opts{r}_$mm_name.lab,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} > $opts{o}/$opts{r}_$mm_name.svg";
 	}
 }
 ###############################3
@@ -232,7 +243,7 @@ close O;close O1;
 system "sort -k 1,1 -k 3n,3 $opts{o}/$opts{r}_final.msynt >$opts{o}/$opts{r}_final.msynt.sorted";
 system "sort -k 1n,1 $opts{o}/$opts{r}_final.lab >$opts{o}/$opts{r}_final.lab.sorted";
 
-system "drawCLGContrib2.4_2 $opts{o}/$opts{r}_final.msynt.sorted:,algcolor=$opts{o}/$opts{r}_final.msynt.sorted:type=alg,file=$opts{o}/$opts{r}_final.lab.sorted,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} > $opts{o}/$opts{r}_reference.svg";
+system "perl $opts{pansyn}/drawCLGContrib2.4_2.pl $opts{o}/$opts{r}_final.msynt.sorted:,algcolor=$opts{o}/$opts{r}_final.msynt.sorted:type=alg,file=$opts{o}/$opts{r}_final.lab.sorted,width=40,window=$opts{w},slide=$opts{sl},maxbreak=$opts{m} > $opts{o}/$opts{r}_reference.svg";
 
 
 

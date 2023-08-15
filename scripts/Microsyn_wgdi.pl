@@ -6,25 +6,27 @@ GetOptions(\%opts,"i=s","t=s","e=s","o=s","s=s","a=s","h|help");
 if(!(defined $opts{i} and defined $opts{o} and defined $opts{a})){
 
 	die"**********************************************\n
-	-i	Full path to the [inputDir] directory containing input files
-	-o	Full path to the [outputDir] directory containing output files
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
+	-i	Full path to the [inputDir_S2] directory
+	-o	Full path to the [outputDir_S2] directory
+	-a	Sequence alignment software (diamond or blast)
 	Optional:
-	-t	Protein alignment threads (default:12)
-	-e	Protein alignment evalue (default:1e-5/0.001)
-	-s	The number of best non-self protein hits (default:5)
+	-t	Sequence alignment threads (default:12)
+	-e	Sequence alignment E-value (default:1e-5 for blast, 1e-3 for diamond)
+	-s	Number of best non-self alignment hits (default:5)
+	-h|-help Print this help page
 		*********************************************\n";
 }
 if((defined $opts{h} or defined $opts{help})){
 
 	die"**********************************************\n
-	-i	Full path to the [inputDir] directory containing input files
-	-o	Full path to the [outputDir] directory containing output files
-	-a	Specify the protein alignment software (It can be set to 'diamond' or 'blast')
+	-i	Full path to the [inputDir_S2] directory
+	-o	Full path to the [outputDir_S2] directory
+	-a	Sequence alignment software (diamond or blast)
 	Optional:
-	-t	Protein alignment threads (default:12)
-	-e	Protein alignment evalue (default:1e-5/0.001)
-	-s	The number of best non-self protein hits (default:5)
+	-t	Sequence alignment threads (default:12)
+	-e	Sequence alignment E-value (default:1e-5 for blast, 1e-3 for diamond)
+	-s	Number of best non-self alignment hits (default:5)
+	-h|-help Print this help page
 		*********************************************\n";
 }
 

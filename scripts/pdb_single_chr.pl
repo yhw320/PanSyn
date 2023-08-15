@@ -11,15 +11,19 @@ GetOptions(\%opts,"i=s","c=s","o=s","h|help");
 if ( !(defined $opts{i}  and defined $opts{c} and defined $opts{o}) ) {
     die "********************************************************
 		-i	Full path to the *.pdb file
-		-c	The letter corresponding to a specified single chromosome, where Chr1=a, Chr2=b etc. (example:a)
-		-o	Full path to output file, the suffix should be pdb (example: chra.pdb)
+		-c	The letter corresponding to a specified chromosome, [a] for [chr1], [b] for [chr2] etc. (e.g. a)
+		-o	Full path to output file, the suffix should be pdb (e.g. chra.pdb)
+		Optional:
+		-h|-help Print this help page
 *********************************************************\n";
 }
 if (defined $opts{h} or defined $opts{help}  ) {
     die "********************************************************
 		-i	Full path to the *.pdb file
-		-c	The letter corresponding to a specified single chromosome, where Chr1=a, Chr2=b etc. (example:a)
-		-o	Full path to output file, the suffix should be pdb (example: chra.pdb)
+		-c	The letter corresponding to a specified chromosome, [a] for [chr1], [b] for [chr2] etc. (e.g. a)
+		-o	Full path to output file, the suffix should be pdb (e.g. chra.pdb)
+		Optional:
+		-h|-help Print this help page
 *********************************************************\n";
 }
 

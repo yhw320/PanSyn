@@ -14,12 +14,23 @@ assemblyTarget <- arg[2]
 assemblyQuery <- arg[3]
 core<-as.numeric(arg[7])
 
+# 保存当前的临时文件夹路径
+old_tempdir <- tempdir()
+
+# 指定新的临时文件夹路径
+new_tempdir <- arg[1]
+
+# 在特定代码段中使用新的临时文件夹路径
+tempdir(new_tempdir)
+# 在此处编写需要使用新临时文件夹的代码
+
+
 ## Pipeline
-#lavs <- lastz(assemblyTarget, assemblyQuery, 
- #             outputDir=axtDir,
-#	      chrsTarget=c(arg[4]),
-#	      chrsQuery=c(arg[5]),
-#             distance=c(arg[6]), mc.cores=core)
+lavs <- lastz(assemblyTarget, assemblyQuery, 
+             outputDir=axtDir,
+	      chrsTarget=c(arg[4]),
+	      chrsQuery=c(arg[5]),
+             distance=c(arg[6]), mc.cores=core)
 lavs <- list.files(path=axtDir, pattern="\\.lav$",full.names = TRUE)
 
 psls <- lavToPsl(lavs, removeLav=FALSE, binary="lavToPsl")
@@ -71,3 +82,5 @@ netToAxt(netSyntenicFile, allPreChain, assemblyTarget, assemblyQuery,
              removeFiles=FALSE,
              binaryNetToAxt="netToAxt", binaryAxtSort="axtSort")
 
+# 恢复默认的临时文件夹路径
+tempdir(old_tempdir)

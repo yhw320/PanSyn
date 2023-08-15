@@ -4,17 +4,18 @@ use Getopt::Long;
 use Cwd 'getcwd';
 
 my %opts;
-GetOptions(\%opts,"i=s","b=s","r=s","p=s","o=s","e=s","l=s","t=s","height=s","width=s","z=s","q1=s","m1=s","s1=s","u1=s","p1=s","x1=s");
-if(!(defined $opts{i} and defined $opts{b} and defined $opts{r} and defined $opts{o} and defined $opts{p})){
+GetOptions(\%opts,"pansyn=s","i=s","b=s","r=s","p=s","o=s","e=s","l=s","t=s","height=s","width=s","z=s","q1=s","m1=s","s1=s","u1=s","p1=s","x1=s");
+if(!(defined $opts{i} and defined $opts{b} and defined $opts{r} and defined $opts{o} and defined $opts{p} and defined $opts{pansyn})){
 
 	die"**********************************************\n
-		-i	Full path to the [inputDir] directory containing input files
+		-i	Full path to the [inputDir_S14A] directory
 		-b	Full path to the [Species_cluster.txt] file
-		-r	Reference species by name abbreviations (example: HSap)
-		-o	Full path to the [outputDir] directory containing output files
+		-r	The abbreviation of the reference species name (e.g. HSap)
+		-o	Full path to the [outputDir_S14A] directory
 		-p	Full path to the [*_gene_pos.txt] file
+		-pansyn Full path the [scripts] provided by PanSyn
 		Optional:
-		-z	Orientation of gene cluster display (1 or 2, default: 1)
+		-z	The direction of gene cluster mapping (1 or 2, default: 1)
 		-e	Threshold of similarity between sequences (0-1] (default: 0.95)
 		-l	Minimum length of CNE (default: 50)
 		-t	Number of threads to use (default: 12)
@@ -30,13 +31,14 @@ if(!(defined $opts{i} and defined $opts{b} and defined $opts{r} and defined $opt
 }
 if (defined $opts{h} or defined $opts{help}) {
 	die "************************************************\n
-		-i	Full path to the [inputDir] directory containing input files
+		-i	Full path to the [inputDir_S14A] directory
 		-b	Full path to the [Species_cluster.txt] file
-		-r	Reference species by name abbreviations (example: HSap)
-		-o	Full path to the [outputDir] directory containing output files
+		-r	The abbreviation of the reference species name (e.g. HSap)
+		-o	Full path to the [outputDir_S14A] directory
 		-p	Full path to the [*_gene_pos.txt] file
+		-pansyn Full path the [scripts] provided by PanSyn
 		Optional:
-		-z	Orientation of gene cluster display (1 or 2, default: 1)
+		-z	The direction of gene cluster mapping (1 or 2, default: 1)
 		-e	Threshold of similarity between sequences (0-1] (default: 0.95)
 		-l	Minimum length of CNE (default: 50)
 		-t	Number of threads to use (default: 12)
@@ -72,6 +74,14 @@ if ($opts{o} =~ /(\/)$/) {
 
     # 删除末尾的 /
     $opts{o} =~ s/$slash$//;
+}
+####
+if ($opts{pansyn} =~ /(\/)$/) {
+    # 存储捕获的结果
+    $slash = $1;
+
+    # 删除末尾的 /
+    $opts{pansyn} =~ s/$slash$//;
 }
 ####
 
@@ -147,11 +157,9 @@ while (my $c=readdir P) {
 			if (exists $h_reverse{$1}) {
 				system "cnef -r $opts{i}/$opts{r}.fa.masked -q $opts{i}/$1.fa.masked -e $opts{i}/$opts{r}.exon -f $opts{i}/$1.exon -y $h_spe_chr{$opts{r}} -z $h_spe_chr{$1} -a $i_ab[0] -b $i_ab[1] -c $i_cd[0] -d $i_cd[1] -t $opts{e} -l $opts{l} -o $opts{r}\_$1.cne -T $opts{t} -v $h_reverse{$1} -Q $opts{q1} -M $opts{m1} -s $opts{s1} -u $opts{u1} -p $opts{p1} -x $opts{x1}";
 			} 
-			system "mv $old_dir/for_R $opts{o}";
 			system "mv $old_dir/*.cne_new_ref.fa $opts{o}";
 			system "mv $old_dir/*.cne_new_query.fa $opts{o}";
 			system "mv $old_dir/*.cne $opts{o}";
-			system "mv $old_dir/allspe_common_cne.bed $opts{o}";
 		}
 	}
 }
@@ -264,4 +272,4 @@ if ($num_spe>2) {
 	system "rm -r $opts{o}/for_common";
 }
 
-system "CNE1 $opts{o}/for_R $opts{o}/for_R/all-for-R.txt $opts{z} $chr $opts{p} $opts{height} $opts{width}";
+system "Rscript $opts{pansyn}/CNE1.R $opts{o}/for_R $opts{o}/for_R/all-for-R.txt $opts{z} $chr $opts{p} $opts{height} $opts{width}";

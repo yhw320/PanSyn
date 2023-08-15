@@ -54,7 +54,7 @@ docker pull micromacro/pansyn:latest
 ```
 (2) Mount local files into docker container. Replace <local_dir_path> with your local dir path.<br>
 ```
-docker run -it -v <local_dir_path>:/root/workspace/ micromacro/pansyn:last /bin/bash
+docker run -it -v <local_dir_path>:/root/workspace/ micromacro/pansyn:latest /bin/bash
 ```
 (3) Activate the environment and script.<br>
 ```

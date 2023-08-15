@@ -66,7 +66,7 @@ source /opt/conda/envs/Pansyn/cns_solve_1.3/cns_solve_env.sh
 ```
 git clone https://github.com/yhw320/PanSyn.git  
 ```
-(2) PanSyn software package includes scripts located in the directory "scripts" that users can run directly without compilation.<br>
+(2) PanSyn package includes scripts located in the directory "scripts" which users can run directly without compilation.<br>
 ```
 cd PanSyn/scripts  
 perl *.pl

@@ -81,7 +81,7 @@ Check out our user protocol [timing] for more information about the expected run
 
 ## 5. Instructions for use
 ### Prepare input files
-Please refer to the [inputDir] folder in demo datasets(https://doi.org/10.5281/zenodo.7588262) to prepare input files.
+Please refer to the [inputDir] folder in demo datasets(https://doi.org/10.5281/zenodo.8248149) to prepare input files.
 
 ### How to run PanSyn
 PanSyn has multiple subroutines (Microsyteny, Macrosyteny and Integrated Micro & Macro synteny analysis). Users only need to prepare input files and corresponding command parameters to execute them. 

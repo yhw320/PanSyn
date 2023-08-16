@@ -9,7 +9,7 @@
 #PBS -e error_file   # Set the error file path
 
 # Change to the work_directory
-cd your_payh/outputDir1_S17/
+cd your_path/outputDir1_S17/
 
 # Run your commands or executable
 Macrosyn1 -i1 inputDir1_S17/ -o1 outputDir1_S17/ -a diamond

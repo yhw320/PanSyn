@@ -1,13 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=my_job           # Job name
-#SBATCH --output=output.log         # Output log file
-#SBATCH --error=error.log           # Error log file
-#SBATCH --partition=partition_name  # Partition name
-#SBATCH --nodes=1                   # Number of nodes to use
-#SBATCH --ntasks-per-node=1         # Number of tasks per node
-#SBATCH --cpus-per-task=1           # Number of CPUs per task
-#SBATCH --mem=1G                    # Memory limit per node
-#SBATCH --time=999:00:00             # Job run time limit
+#SBATCH --job-name=job_name  # Set the job name
+#SBATCH --nodes=1  # Set the required number of nodes
+#SBATCH --ntasks-per-node=4  # Set the required number of CPU cores per node
+#SBATCH --time=01:00:00  # Set the maximum runtime for the job
 
-# Execute command or script
-<command_or_script>
+# Optional directives:
+#SBATCH --partition=queue_name  # Set the queue name
+#SBATCH --output=output_file  # Set the output file path
+#SBATCH --error=error_file  # Set the error file path
+

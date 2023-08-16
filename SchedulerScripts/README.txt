@@ -46,7 +46,7 @@ To submit a script using SLURM (Simple Linux Utility for Resource Management), y
    #SBATCH --time=01:00:00        # Set the maximum runtime for the job
 
 3. Add task commands: 
-   Add the actual task commands you want to execute on the compute nodes in your script. For example, if you want to run PanSyn, you can add it to the PBS script:
+   Add the actual task commands you want to execute on the compute nodes in your script. For example, if you want to run PanSyn, you can add it to the SLURM script:
    >Macrosyn1 -i1 inputDir1_S17/ -o1 outputDir1_S17/ -a diamond
 
 4. Submit the SLURM job: 

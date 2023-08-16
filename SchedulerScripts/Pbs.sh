@@ -1,15 +1,15 @@
 #!/bin/bash
 
-#PBS -N my_job             # Job name
-#PBS -l nodes=1:ppn=12     # Number of nodes and CPUs
-#PBS -l walltime=999:00:00 # Job walltime
-#PBS -q queue_name
-#PBS -V
-#PBS -p 1023
-#PBS -S /bin/bash
+#PBS -N job_name             # Set the job name
+#PBS -l nodes=1:ppn=12       # Set the required number of nodes and CPU cores per node
+#PBS -l walltime=999:00:00   # Set the maximum runtime for the job
+# Optional directives:
+#PBS -q queue_name   # Set the queue name
+#PBS -o output_file  # Set the output file path
+#PBS -e error_file   # Set the error file path
 
-# Change to the working directory
-cd /path/to/work_directory
+# Change to the work_directory
+cd your_payh/outputDir1_S17/
 
-# Execute the command
-<command_or_script>
+# Run your commands or executable
+Macrosyn1 -i1 inputDir1_S17/ -o1 outputDir1_S17/ -a diamond

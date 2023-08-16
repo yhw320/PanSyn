@@ -39,6 +39,7 @@ To submit a script using SLURM (Simple Linux Utility for Resource Management), y
 
 2. Set SLURM directives: 
    In the SLURM script, you need to set some SLURM directives to define the characteristics of your job, such as the job name, the number of nodes, CPU cores, runtime, etc. 
+   
    Here are some common examples of SLURM directives:
    #SBATCH -J job_name  # Set the job name
    #SBATCH -N 1  # Set the required number of nodes

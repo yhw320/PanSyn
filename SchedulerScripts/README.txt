@@ -5,7 +5,7 @@ The PanSyn pipeline can work on both a stand-alone server and a cluster.
 Job Scheduling
 We recommend using a job scheduler to initiate the execution of commands on computation nodes in a cluster environment, including PBS, SLURM, and others. We have provided example scripts, "Pbs.sh" and "Slurm.sh", on the website (https://github.com/yhw320/PanSyn/tree/main/SchedulerScripts). 
 
-Please note that the above examples provide a basic framework for PBS/SLURM scripts and may require appropriate modifications based on your cluster environment and job requirements. For more detailed information on PBS/SLURM scripts, refer to your cluster documentation or consult with your system administrator.
+Please note that the above examples provide a basic framework for PBS/SLURM scripts and require appropriate modifications based on your cluster environment and job requirements. For more detailed information on PBS/SLURM scripts, refer to your cluster documentation or consult with your system administrator.
 
 To submit a script using PBS (Portable Batch System), you can follow these steps:
 1. Prepare a PBS script:
@@ -53,7 +53,7 @@ To submit a script using SLURM (Simple Linux Utility for Resource Management), y
 
 4. Submit the SLURM job: 
    Use the sbatch command to submit the SLURM script. Execute the following command in the terminal:
-   >sbatch your_script.slurm
+   >sbatch Slurm.sh
 
 5. Check job status: 
    You can use the squeue command to check the status and progress of your jobs.

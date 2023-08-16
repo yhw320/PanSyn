@@ -22,7 +22,7 @@ To submit a script using PBS (Portable Batch System), you can follow these steps
 2. Add task commands: 
    Add the actual task commands you want to execute on the compute nodes in your script. For example, if you want 
    to run PanSyn, you can add it to the PBS script:
-   >Microsyn_MCScanX -i inputDir_S1/ -o outputDir_S1/ -a diamond
+   >Macrosyn1 -i1 inputDir1_S17/ -o1 outputDir1_S17/ -a diamond
 
 3. Submit the PBS job: 
    Use the qsub command to submit the PBS script. Execute the following command in the terminal:
@@ -49,7 +49,7 @@ To submit a script using SLURM (Simple Linux Utility for Resource Management), y
 
 3. Add task commands: 
    Add the actual task commands you want to execute on the compute nodes in your script. For example, if you want to run PanSyn, you can add it to the PBS script:
-   >Microsyn_MCScanX -i inputDir_S1/ -o outputDir_S1/ -a diamond
+   >Macrosyn1 -i1 inputDir1_S17/ -o1 outputDir1_S17/ -a diamond
 
 4. Submit the SLURM job: 
    Use the sbatch command to submit the SLURM script. Execute the following command in the terminal:

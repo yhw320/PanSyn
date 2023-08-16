@@ -14,10 +14,9 @@ To submit a script using PBS (Portable Batch System), you can follow these steps
    job name, the number of nodes, CPU cores, runtime, etc. 
 
    Here are some common examples of PBS directives:
-   #PBS -N job_name  # Set the job name
-   #PBS -l select=1:ncpus=4  # Set the required nodes and CPU cores
-   #PBS -l walltime=01:00:00  # Set the job runtime limit
-   #PBS -q queue_name  # Set the job queue name
+   #PBS -N job_name             # Set the job name
+   #PBS -l nodes=1:ppn=12       # Set the required number of nodes and CPU cores per node
+   #PBS -l walltime=999:00:00   # Set the maximum runtime for the job
   
 2. Add task commands: 
    Add the actual task commands you want to execute on the compute nodes in your script. For example, if you want 

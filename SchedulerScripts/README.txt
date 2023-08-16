@@ -26,9 +26,7 @@ To submit a script using PBS (Portable Batch System), you can follow these steps
 
 3. Submit the PBS job: 
    Use the qsub command to submit the PBS script. Execute the following command in the terminal:
-   ```
    >qsub Pbs.sh
-   ```
 
 4. Check job status: 
    You can use the qstat command to check the status and progress of your jobs.

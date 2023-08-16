@@ -40,11 +40,10 @@ To submit a script using SLURM (Simple Linux Utility for Resource Management), y
    In the SLURM script, you need to set some SLURM directives to define the characteristics of your job, such as the job name, the number of nodes, CPU cores, runtime, etc. 
    
    Here are some common examples of SLURM directives:
-   #SBATCH -J job_name  # Set the job name
-   #SBATCH -N 1  # Set the required number of nodes
-   #SBATCH -n 4  # Set the required number of CPU cores
-   #SBATCH -t 01:00:00  # Set the job runtime limit
-   #SBATCH -p queue_name  # Set the job queue name
+   #SBATCH --job-name=job_name    # Set the job name
+   #SBATCH --nodes=1              # Set the required number of nodes
+   #SBATCH --ntasks-per-node=4    # Set the required number of CPU cores per node
+   #SBATCH --time=01:00:00        # Set the maximum runtime for the job
 
 3. Add task commands: 
    Add the actual task commands you want to execute on the compute nodes in your script. For example, if you want to run PanSyn, you can add it to the PBS script:

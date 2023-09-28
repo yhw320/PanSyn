@@ -61,7 +61,6 @@ conda config --show channels
 (3)	Create an environment named pansyn_env and active it.
 ```
 conda create -n pansyn_env python=3.10.12 -y
-```
 conda activate pansyn_env
 ```
 (4)	Install PanSyn using Conda's mamba

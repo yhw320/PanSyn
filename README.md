@@ -50,11 +50,8 @@ conda install -c micromacro pansyn -y
 (1) To add channels in Conda, you can use the commands:
 ```
 conda config --add channels seqera
-```
 conda config --add channels dnachun
-```
 conda config --add channels bioconda
-```
 conda config --add channels conda-forge
 ```
 (2)	Verify that the channels have been added successfully.
@@ -70,7 +67,6 @@ conda activate pansyn_env
 (4)	Install PanSyn using Conda's mamba
 ```
 conda install mamba -c conda-forge -y 
-```
 mamba install -c micromacro pansyn -y
 ```
 #### Install from Docker:

@@ -23,7 +23,7 @@ We have packaged PanSyn with all its dependencies as one Conda package and made 
 
 
 ## 3. Installation guide
-### Three ways to install PanSyn:
+### Four ways to install PanSyn:
 #### Install from Conda:
 (1) To add channels in conda, you can use the commands:<br>
 ```
@@ -46,7 +46,33 @@ conda activate pansyn
 ```
 conda install -c micromacro pansyn -y  
 ```
-
+#### Install using Conda's mamba:
+(1) To add channels in Conda, you can use the commands:
+```
+conda config --add channels seqera
+```
+conda config --add channels dnachun
+```
+conda config --add channels bioconda
+```
+conda config --add channels conda-forge
+```
+(2)	Verify that the channels have been added successfully.
+```
+conda config --show channels
+```
+(3)	Create an environment named pansyn_env and active it.
+```
+conda create -n pansyn_env python=3.10.12 -y
+```
+conda activate pansyn_env
+```
+(4)	Install PanSyn using Conda's mamba
+```
+conda install mamba -c conda-forge -y 
+```
+mamba install -c micromacro pansyn -y
+```
 #### Install from Docker:
 (1) Pull image from Dockerhub.<br>
 ```

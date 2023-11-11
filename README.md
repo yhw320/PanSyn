@@ -47,7 +47,7 @@ conda activate pansyn
 ```
 conda install -c micromacro pansyn -y
 ```
-CRITICAL: If the Step 3A(4) takes a long time (>30 min), users can accelerate the installation of PanSyn using Conda’s mamba. Replace Steps 3A(3-4) with the following command lines:<br>
+**CRITICAL**: If the Step 3A(4) takes a long time (>30 min), users can accelerate the installation of PanSyn using Conda’s mamba. Replace Steps 3A(3-4) with the following command lines:<br>
  ```
 	conda create -n pansyn python=3.10.12 -y
 	conda activate pansyn

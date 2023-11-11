@@ -47,17 +47,6 @@ conda activate pansyn
 ```
 conda install -c micromacro pansyn -y  
 ```
-	△CRITICAL STEP: If the Step 3A(4) takes a long time (>30 min), users can accelerate the installation of PanSyn using Conda’s mamba. Replace Steps 3A(3-4) with the following command lines:
-```
-	conda create -n pansyn python=3.10.12 -y
-```
-	conda activate pansyn
-```
-	conda install mamba -c conda-forge -y
-```
-	mamba install -c micromacro pansyn -y
-```
-
 #### B: Install from Docker:
 (1) Pull image from Dockerhub.<br>
 ```
@@ -83,7 +72,7 @@ cd PanSyn/scripts
 perl *.pl
 ```
 ### Timing: 
-Installing PanSyn via Conda or Docker can be completed within approximately 30 minutes, but it may take longer depending your internet speed.
+~30 min (using Conda), ~15 min (using Conda’s mamba or Docker), or ~2 h (using GitHub). But it may take longer depending your internet speed.
 
 ## 4. Demo datasets
 We provide the full demo datasets in the website (https://doi.org/10.5281/zenodo.8248149), which includes input files, all processed data and result files.

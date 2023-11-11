@@ -23,7 +23,7 @@ We have packaged PanSyn with all its dependencies as one Conda package and made 
 
 
 ## 3. Installation guide
-### Four ways to install PanSyn:
+### Three ways to install PanSyn:
 #### A. Install from Conda:
 (1) To add channels in conda, you can use the commands:<br>
 ```
@@ -47,7 +47,14 @@ conda activate pansyn
 ```
 conda install -c micromacro pansyn -y  
 ```
-#### B: Install from Docker:
+	△CRITICAL STEP: If the Step 3A(4) takes a long time (>30 min), users can accelerate the installation of PanSyn using Conda’s mamba. Replace Steps 3A(3-4) with the following command lines:<br>
+ ```
+	conda create -n pansyn python=3.10.12 -y
+	conda activate pansyn
+	conda install mamba -c conda-forge -y
+	mamba install -c micromacro pansyn -y
+ ```
+#### B. Install from Docker:
 (1) Pull image from Dockerhub.<br>
 ```
 docker pull micromacro/pansyn:latest
@@ -61,7 +68,7 @@ docker run -it -v <your_host_path>:<your_container_path> micromacro/pansyn:lates
 source activate Pansyn
 source /opt/conda/envs/Pansyn/cns_solve_1.3/cns_solve_env.sh
 ```
-#### C: Install from GitHub:
+#### C. Install from GitHub:
 (1) Download and unpack https://github.com/yhw320/PanSyn/archive/refs/heads/main.zip. Or using the following command.<br>
 ```
 git clone https://github.com/yhw320/PanSyn.git  

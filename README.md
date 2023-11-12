@@ -82,13 +82,13 @@ perl *.pl
 ~30 min (using Conda), ~15 min (using Conda’s mamba or Docker), or ~2 h (using GitHub). But it may take longer depending your internet speed.
 
 ## 4. Demo datasets
-We provide the full demo datasets in the website (https://doi.org/10.5281/zenodo.10113419), which includes input files, all processed data and result files.
+We provide the full demo datasets in the website (https://doi.org/10.5281/zenodo.10115240), which includes input files, all processed data and result files.
 
 Check out our user protocol [timing] for more information about the expected run time.
 
 ## 5. Instructions for use
 ### Prepare input files
-Please refer to the [inputDir] folder in demo datasets(https://doi.org/10.5281/zenodo.10113419) to prepare input files.
+Please refer to the [inputDir] folder in demo datasets(https://doi.org/10.5281/zenodo.10115240) to prepare input files.
 
 ### How to run PanSyn
 PanSyn has multiple subroutines (Microsyteny, Macrosyteny and Integrated Micro & Macro synteny analysis). Users only need to prepare input files and corresponding command parameters to execute them. 

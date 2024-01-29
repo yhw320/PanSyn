@@ -24,8 +24,6 @@ We have packaged PanSyn with all its dependencies as one Conda package and made 
 
 ## 3. Installation guide
 ### Three ways to install PanSyn:
-### CRITICAL: 
-To install PanSyn from Conda or Docker, make sure that you have preinstalled Conda or Docker. The installation was tested on Conda version 23.7.1 and Docker version 1.13.1, build 7d71120/1.13.1. To install PanSyn from GitHub, make sure that you have preinstalled all the dependencies listed in the "Software Prerequisites" section and added them to the PATH environment variable.
 #### A. Install from Conda:
 (1) To add channels in conda, you can use the commands:<br>
 ```
